@@ -110,7 +110,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
               onClick={onScrollToConsultation}
               className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-surface-3 hover:bg-line-strong text-ink border border-line-strong font-bold text-sm rounded-xl transition-all"
             >
-              <span>상담 신청하기</span>
+              <span>방문예약증 발급</span>
             </button>
           </div>
         </div>

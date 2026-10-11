@@ -18,7 +18,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
     { label: '평면도', long: '주택형 평면도', id: 'floorplans' },
     { label: '사진갤러리', long: '실물 사진 갤러리', id: 'interior' },
     { label: '오시는 길', long: '오시는 길', id: 'location' },
-    { label: '상담신청', long: '방문예약·상담 신청', id: 'consultation' },
+    { label: '방문예약', long: '모델하우스 방문예약증 발급', id: 'consultation' },
   ];
 
   const handleNavClick = (id: string) => {

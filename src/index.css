@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   중앙공원 롯데캐슬 시그니처 — 색상 토큰 (웜 아이보리 밝은 테마)
+
+   색을 바꾸고 싶으면 이 파일의 값만 고치면 홈페이지 전체가 함께 바뀝니다.
+   컴포넌트에서는 bg-surface / text-ink / text-gold 처럼 이름으로만 씁니다.
+   ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* 면 (surface) ─ 배경 */
+  --color-surface: #faf8f5;        /* 페이지 바탕 — 웜 아이보리 */
+  --color-surface-2: #ffffff;      /* 카드 · 패널 */
+  --color-surface-3: #f3efe8;      /* 교차 섹션 띠 · 입력창 */
+  --color-line: #e8e2d9;           /* 기본 구분선 */
+  --color-line-strong: #d9d1c4;    /* 강조 구분선 */
+
+  /* 글자 (ink) */
+  --color-ink: #292524;            /* 본문 */
+  --color-ink-soft: #57534e;       /* 보조 */
+  --color-ink-muted: #78716c;      /* 3차 · placeholder */
+  --color-on-gold: #1c1917;        /* ★ 골드 버튼 위 어두운 글자 — 밝게 바꾸면 안 됩니다 */
+
+  /* 골드 (brand) */
+  --color-gold: #a16207;           /* 골드 글자 — 아이보리 배경 대비 4.6:1 (WCAG AA) */
+  --color-gold-deep: #78350f;      /* 큰 제목용 진한 골드 */
+  --color-gold-fill: #fbbf24;      /* 버튼 채움 */
+  --color-gold-fill-2: #f59e0b;    /* 버튼 그라디언트 끝 */
+  --color-gold-tint: #fdf6e3;      /* 연한 골드 배경 */
+  --color-gold-tint-2: #faedcd;    /* 연한 골드 배경 (조금 더 진하게) */
+  --color-gold-line: #ead9ae;      /* 골드 구분선 */
+
+  /* 사진 위 (히어로 · 카드 사진) ─ 사진 위에서는 밝은 글자가 맞습니다 */
+  --color-photo-scrim: #1c1917;    /* 사진 위에 덮는 어두운 막 */
+  --color-on-photo: #ffffff;       /* 사진 위 글자 */
+  --color-on-photo-soft: #e7e5e4;  /* 사진 위 보조 글자 */
+  --color-gold-bright: #fcd34d;    /* 사진 위 골드 글자 (어두운 배경이라 밝게) */
+
+  /* 상태 */
+  --color-ok: #047857;
+  --color-ok-tint: #ecfdf5;
+  --color-danger: #b91c1c;
+  --color-danger-tint: #fef2f2;
+}
+
+/* ── 애니메이션 ───────────────────────────────────────────────────────────
+   기존 코드가 animate-fadeIn / animate-in 클래스를 쓰고 있었지만
+   keyframes가 정의되지 않아 동작하지 않았습니다. 여기서 살립니다. */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.25s ease-out both;
+  }
+  .animate-in {
+    animation: slideUp 0.28s ease-out both;
+  }
+}
+
+/* 스크롤 이동이 부드럽게 (앵커 네비게이션) */
+html {
+  scroll-behavior: smooth;
+}

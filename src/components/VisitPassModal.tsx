@@ -89,8 +89,8 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
             )}
 
             {/* 지도.
-                photos/map.jpg 가 있으면 그 이미지를, 없으면 구글 지도를 띄운다.
-                (오시는 길 섹션과 같은 슬롯을 쓴다) */}
+                photos/map.jpg 가 있으면 그 이미지를, 없으면 주소 안내를 보여준다.
+                (예약증은 인쇄해서 쓰므로 외부 지도를 불러오지 않는다) */}
             <div className="relative my-4 aspect-[4/3] bg-white rounded-lg border border-stone-300 overflow-hidden">
               {mapImage ? (
                 <img
@@ -101,15 +101,18 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
                   decoding="async"
                 />
               ) : (
-                <iframe
-                  title="견본주택 위치 지도"
-                  src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    CONSULTATION_CONFIG.modelHouseAddress,
-                  )}&hl=ko&z=16&output=embed`}
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                <div className="w-full h-full flex flex-col items-center justify-center text-center px-4 bg-stone-50">
+                  <div className="w-12 h-12 rounded-full bg-[#8b1528] flex items-center justify-center mb-3 shadow">
+                    <MapPin className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="text-[10px] text-stone-500 mb-0.5">견본주택</div>
+                  <div className="text-sm font-black text-stone-900 leading-snug">
+                    {CONSULTATION_CONFIG.modelHouseAddress}
+                  </div>
+                  <div className="mt-1.5 text-[10px] text-stone-600">
+                    상무시민공원 종합운동장 맞은편
+                  </div>
+                </div>
               )}
             </div>
 

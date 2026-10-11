@@ -51,35 +51,44 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
             </div>
 
             {/* 지도.
-                photos/map.jpg 를 넣으면 그 이미지(예: 네이버 지도 캡처)를 쓰고,
-                없으면 구글 지도를 그대로 띄운다. 둘 다 API 키가 필요 없다. */}
+                photos/map.jpg 를 넣으면 그 이미지(네이버 지도 캡처 등)를 쓴다.
+                없을 때는 외부 지도를 불러오지 않고 위치 안내 카드를 보여준다.
+                — 외부 지도를 iframe 으로 띄우면 차단되는 환경에서 깨진 상자가 보인다. */}
             <div className="relative aspect-[16/10] rounded-xl border border-line overflow-hidden bg-surface-3">
               {mapImage ? (
                 <a
                   href={naverMapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full h-full"
+                  className="block w-full h-full group/map"
                 >
                   <img
                     src={mapImage}
-                    alt={`견본주택 위치 — ${CONSULTATION_CONFIG.modelHouseAddress}`}
-                    className="w-full h-full object-cover"
+                    alt={`견본주택 위치 — ${address}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/map:scale-105"
                     loading="lazy"
                     decoding="async"
                   />
+                  <span className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-surface-2/92 rounded-md text-[11px] text-gold font-semibold border border-gold-line shadow-sm">
+                    지도에서 보기
+                  </span>
                 </a>
               ) : (
-                <iframe
-                  title="중앙공원 롯데캐슬 시그니처 견본주택 위치"
-                  src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    CONSULTATION_CONFIG.modelHouseAddress,
-                  )}&hl=ko&z=16&output=embed`}
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
+                <div className="w-full h-full flex flex-col items-center justify-center text-center px-6 bg-gradient-to-b from-surface-2 to-surface-3">
+                  <div className="w-14 h-14 rounded-full bg-gold-tint border-2 border-gold-line flex items-center justify-center mb-4">
+                    <MapPin className="w-7 h-7 text-gold" />
+                  </div>
+                  <div className="text-xs text-ink-soft mb-1">견본주택</div>
+                  <div className="text-lg sm:text-xl font-extrabold text-ink mb-1">
+                    {address}
+                  </div>
+                  <div className="text-xs text-ink-soft">
+                    {CONSULTATION_CONFIG.modelHouseLocationDetail.split('/')[0].trim()}
+                  </div>
+                  <div className="mt-4 text-[11px] text-ink-muted">
+                    아래 버튼으로 네이버 지도·카카오맵에서 길찾기를 바로 하실 수 있습니다.
+                  </div>
+                </div>
               )}
             </div>
 

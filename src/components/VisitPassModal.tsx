@@ -1,5 +1,6 @@
 import React from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
+import { photoSlot } from '../assets/images';
 import { X, Phone, Download, Printer, Check, MapPin, Share2 } from 'lucide-react';
 
 interface VisitPassModalProps {
@@ -17,6 +18,8 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
   guestDate,
   guestUnit = '102㎡ (구 39평형)',
 }) => {
+  const mapImage = photoSlot('map');
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
@@ -85,57 +88,29 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
               </div>
             )}
 
-            {/* Simulated Simplified Map Box (Matching the photo layout) */}
-            <div className="relative my-4 aspect-[4/3] bg-white rounded-lg border border-stone-300 p-3 text-stone-900 text-left overflow-hidden select-none">
-              {/* Grid Roads */}
-              <div className="absolute inset-0">
-                {/* River 영산강 */}
-                <div className="absolute top-0 bottom-0 left-4 w-7 bg-sky-200 -rotate-12 border-r border-sky-400 flex items-center justify-center">
-                  <span className="text-[9px] text-sky-800 -rotate-90 font-bold">영산강</span>
-                </div>
-                {/* Road 광주천 */}
-                <div className="absolute bottom-6 left-10 right-0 h-7 bg-sky-100 -rotate-6 border-y border-sky-300 flex items-center justify-center">
-                  <span className="text-[9px] text-sky-800 font-bold">광주천</span>
-                </div>
-                {/* Grid lines */}
-                <div className="absolute top-1/2 left-0 right-0 h-[1.5px] bg-stone-300" />
-                <div className="absolute top-1/4 left-0 right-0 h-[1.5px] bg-stone-300" />
-                <div className="absolute top-3/4 left-0 right-0 h-[1.5px] bg-stone-300" />
-                <div className="absolute left-1/2 top-0 bottom-0 w-[1.5px] bg-stone-300" />
-                <div className="absolute left-3/4 top-0 bottom-0 w-[1.5px] bg-stone-300" />
-              </div>
-
-              {/* Labels */}
-              <div className="relative z-10 text-[9px] text-stone-700 font-semibold space-y-1">
-                <div className="absolute top-1 left-2 bg-stone-100/90 px-1 rounded border border-stone-400">
-                  유덕 IC
-                </div>
-                <div className="absolute top-12 left-10 text-[8px] text-stone-600">
-                  • 광주환경공단
-                </div>
-                <div className="absolute top-3 right-12 text-[8px] text-stone-600">
-                  • 상무소각장
-                </div>
-                <div className="absolute top-12 right-2 text-[8px] text-stone-600">
-                  • CGV / 롯데마트
-                </div>
-                <div className="absolute bottom-16 right-4 text-[8px] text-stone-600">
-                  • 계수초 / 운천초
-                </div>
-              </div>
-
-              {/* Red Pin Target: 견본주택 */}
-              <div className="absolute top-[40%] left-[45%] -translate-x-1/2 -translate-y-1/2 z-20 text-center">
-                <div className="bg-[#8b1528] text-white text-[11px] font-black px-2 py-0.5 rounded shadow-md border border-white">
-                  견본주택
-                </div>
-                <div className="w-3 h-3 bg-[#8b1528] mx-auto mt-0.5 shadow-sm" />
-              </div>
-
-              {/* Bottom Park */}
-              <div className="absolute bottom-2 left-[36%] z-10 bg-emerald-50 border border-emerald-300 px-2 py-1 rounded text-[8px] text-emerald-900 font-medium text-center">
-                상무 시민공원 <br />종합운동장
-              </div>
+            {/* 지도.
+                photos/map.jpg 가 있으면 그 이미지를, 없으면 구글 지도를 띄운다.
+                (오시는 길 섹션과 같은 슬롯을 쓴다) */}
+            <div className="relative my-4 aspect-[4/3] bg-white rounded-lg border border-stone-300 overflow-hidden">
+              {mapImage ? (
+                <img
+                  src={mapImage}
+                  alt={`견본주택 위치 — ${CONSULTATION_CONFIG.modelHouseAddress}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <iframe
+                  title="견본주택 위치 지도"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    CONSULTATION_CONFIG.modelHouseAddress,
+                  )}&hl=ko&z=16&output=embed`}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              )}
             </div>
 
             {/* Model House Address Section */}

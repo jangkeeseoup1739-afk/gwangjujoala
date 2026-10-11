@@ -10,14 +10,15 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSection }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // label: 상단 메뉴(짧게) / long: 모바일 서랍(설명형)
   const navLinks = [
-    { label: '사업안내·특화정보', id: 'cupcamon-guide' },
-    { label: '895조 반도체·군공항 호재', id: 'catalysts', badge: '핵심호재' },
-    { label: '단지·동호수 실물도면', id: 'siteplans', badge: '공식도면' },
-    { label: '주택형 평면도', id: 'floorplans' },
-    { label: '실물 사진 갤러리', id: 'interior' },
-    { label: '오시는 길', id: 'location' },
-    { label: '방문예약·상담', id: 'consultation' },
+    { label: '사업안내', long: '사업안내·특화정보', id: 'cupcamon-guide' },
+    { label: '개발호재', long: '895조 반도체·군공항 호재', id: 'catalysts', badge: '핵심' },
+    { label: '배치도', long: '단지·동호수 실물도면', id: 'siteplans', badge: '도면' },
+    { label: '평면도', long: '주택형 평면도', id: 'floorplans' },
+    { label: '사진갤러리', long: '실물 사진 갤러리', id: 'interior' },
+    { label: '오시는 길', long: '오시는 길', id: 'location' },
+    { label: '상담신청', long: '방문예약·상담 신청', id: 'consultation' },
   ];
 
   const handleNavClick = (id: string) => {
@@ -28,9 +29,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
   return (
     <header className="sticky top-0 z-40 bg-surface-2/90 backdrop-blur-md border-b border-gold-line text-ink shadow-sm transition-all">
       {/* Top micro banner for urgent announcement */}
-      <div className="bg-gradient-to-r from-gold-tint via-surface-2 to-gold-tint px-4 py-1.5 text-xs text-gold border-b border-gold-line text-center font-medium flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse" />
-        <span>[특급호재] 광주 군공항 이전 확정 & 국가 반도체 895조 메가 클러스터 직접 수혜 단지</span>
+      <div className="bg-gradient-to-r from-gold-tint via-surface-2 to-gold-tint px-4 py-1.5 text-[11px] sm:text-xs text-gold border-b border-gold-line text-center font-medium flex items-center justify-center gap-2">
+        <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse shrink-0 hidden sm:block" />
+        <span className="truncate sm:whitespace-normal">[특급호재] 광주 군공항 이전 확정 &amp; 국가 반도체 895조 메가 클러스터 직접 수혜 단지</span>
         <span className="hidden md:inline text-gold/60">|</span>
         <span className="hidden md:inline text-ink-soft">
           담당자 <strong className="text-gold">{CONSULTATION_CONFIG.managerName}</strong> 직통: {CONSULTATION_CONFIG.managerPhone}
@@ -50,27 +51,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs uppercase tracking-widest text-gold font-semibold font-serif">
+              <span className="text-[10px] xl:text-xs uppercase tracking-widest text-gold font-semibold font-serif whitespace-nowrap">
                 LOTTE CASTLE SIGNATURE
               </span>
             </div>
-            <div className="text-lg sm:text-xl font-bold tracking-tight text-ink group-hover:text-gold transition-colors">
+            <div className="text-base sm:text-lg xl:text-xl font-bold tracking-tight text-ink group-hover:text-gold transition-colors whitespace-nowrap">
               중앙공원 롯데캐슬 시그니처
             </div>
           </div>
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden xl:flex items-center gap-4 2xl:gap-5">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className="text-sm font-medium text-ink-soft hover:text-gold transition-colors relative py-1 focus:outline-none flex items-center gap-1.5"
+              className="text-[13px] font-medium text-ink-soft hover:text-gold transition-colors py-1 focus:outline-none flex items-center gap-1 whitespace-nowrap"
             >
               <span>{link.label}</span>
               {link.badge && (
-                <span className="text-[10px] font-semibold text-gold bg-gold-tint-2 border border-gold-line px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-semibold text-gold bg-gold-tint-2 border border-gold-line px-1 py-0.5 rounded">
                   {link.badge}
                 </span>
               )}
@@ -100,10 +101,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
         </div>
 
         {/* Mobile menu trigger */}
-        <div className="flex sm:hidden items-center gap-2">
+        <div className="flex xl:hidden items-center gap-2">
           <a
             href={CONSULTATION_CONFIG.phoneTelLink}
-            className="p-2 text-on-gold bg-gold-fill rounded-lg focus:outline-none"
+            className="p-2 sm:hidden text-on-gold bg-gold-fill rounded-lg focus:outline-none"
             aria-label="전화 상담"
           >
             <Phone className="w-4 h-4 fill-on-gold" />
@@ -120,7 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-surface border-b border-line px-4 py-5 space-y-3">
+        <div className="xl:hidden bg-surface border-b border-line px-4 py-5 space-y-3">
           <div className="p-3 bg-surface-2 rounded-lg border border-gold-line mb-3">
             <div className="text-xs text-gold font-semibold mb-1">분양 상담 담당자 직통</div>
             <div className="text-base font-bold text-ink flex items-center justify-between">
@@ -141,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
                 onClick={() => handleNavClick(link.id)}
                 className="text-left py-2.5 px-3 text-sm text-ink-soft hover:text-ink bg-surface-3/70 rounded-md border border-line"
               >
-                {link.label}
+                {link.long}
               </button>
             ))}
           </div>

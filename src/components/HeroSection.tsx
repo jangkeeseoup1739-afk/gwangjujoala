@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
 import { APP_IMAGES } from '../assets/images';
-import { Phone, FileText, Sparkles, Building2, Trees, Cpu, Calendar, Image as ImageIcon, Maximize2, X, Check, MapPin } from 'lucide-react';
+import { Phone, FileText, Sparkles, Building2, Trees, Cpu, Calendar, Maximize2, X, MapPin } from 'lucide-react';
 
 interface HeroSectionProps {
   onScrollToConsultation: () => void;
   onOpenPassModal: () => void;
 }
 
-type HeroBgType = 'birdEye' | 'elevation' | 'night' | 'brightLuxury';
-
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onScrollToConsultation,
   onOpenPassModal
 }) => {
   const [activeHeroTab, setActiveHeroTab] = useState<number>(0);
-  // 메인 배경은 photos/ 폴더의 사진으로 교체됩니다 (photos/README.md 참고)
-  const [activeBg, setActiveBg] = useState<HeroBgType>('birdEye');
 
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState<boolean>(false);
 
@@ -53,53 +49,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   const currentTheme = heroThemes[activeHeroTab];
 
-  const bgOptions = [
-    {
-      id: 'birdEye' as HeroBgType,
-      label: '광역 조감도 전경 (공식 원본)',
-      shortLabel: '광역 조감도',
-      badge: '공식 광역 조감도',
-      src: APP_IMAGES.mainBirdEyeView,
-      alt: '중앙공원 롯데캐슬 시그니처 광역 조감도 전경',
-      description: '중앙공원 1지구 풍암호수와 도심 스카이라인을 담은 공식 광역 조감도'
-    },
-    {
-      id: 'elevation' as HeroBgType,
-      label: '단지 외관 입면도',
-      shortLabel: '외관 입면도',
-      badge: '공식 외관 입면도',
-      src: APP_IMAGES.elevationFacade,
-      alt: '중앙공원 롯데캐슬 시그니처 공식 외관 입면도',
-      description: '롯데건설 최고급 커튼월룩 및 특화 외관 입면 설계 도면'
-    },
-    {
-      id: 'night' as HeroBgType,
-      label: '시그니처 야간 조감도',
-      shortLabel: '야간 랜드마크',
-      badge: '하이엔드 CG',
-      src: APP_IMAGES.heroLotteCastle,
-      alt: '중앙공원 롯데캐슬 시그니처 하이엔드 야간 경관 투시도',
-      description: '커튼월룩과 옥상 조형물이 빛나는 럭셔리 야경 랜드마크'
-    },
-    {
-      id: 'brightLuxury' as HeroBgType,
-      label: '골드 시그니처 호수 랜드마크',
-      shortLabel: '골드 랜드마크',
-      badge: '골드 랜드마크',
-      src: APP_IMAGES.luxuryBrightHeroBg,
-      alt: '중앙공원 롯데캐슬 시그니처 눈부신 햇살과 호수공원 조망 랜드마크 전경',
-      description: '풍암호수공원의 푸른 물결과 찬란한 황금빛 햇살이 빛나는 하이엔드 랜드마크'
-    }
-  ];
+  // 대표 사진 1장만 사용한다. 바꾸시려면 photos/birdeye.jpg 를 넣으세요.
+  const currentBg = {
+    badge: '공식 광역 조감도',
+    src: APP_IMAGES.mainBirdEyeView,
+    alt: '중앙공원 롯데캐슬 시그니처 광역 조감도 전경',
+    description: '중앙공원 1지구 풍암호수와 도심 스카이라인을 담은 공식 광역 조감도',
+  };
 
-  const currentBg = bgOptions.find(bg => bg.id === activeBg) || bgOptions[0];
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden bg-gradient-to-b from-photo-scrim/40 via-photo-scrim to-surface text-on-photo pt-6 pb-20 px-4 sm:px-6 lg:px-8">
       {/* 1. Full-Bleed Atmospheric Background Photo (User's original attached photo / selectable) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
-          key={currentBg.id}
           src={currentBg.src}
           alt={currentBg.alt}
           className="w-full h-full object-cover object-center scale-100 transition-all duration-700 ease-out filter brightness-100 contrast-105"
@@ -112,43 +75,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto w-full text-center flex flex-col items-center">
-        {/* Top Floating Photo Selector & Upload Bar */}
-        <div className="w-full max-w-3xl mx-auto mb-6 p-2.5 rounded-2xl bg-stone-950/95 border-2 border-amber-500/60 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-2.5">
-          <div className="flex items-center gap-2 px-2 text-xs font-bold text-amber-300 shrink-0">
-            <ImageIcon className="w-4 h-4 text-amber-400" />
-            <span>메인 배경 사진 보기:</span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto justify-center">
-            {bgOptions.map((opt) => {
-              const isSelected = activeBg === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  onClick={() => setActiveBg(opt.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 shadow-lg shadow-amber-500/30 ring-2 ring-amber-300'
-                      : 'bg-stone-900/80 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-800'
-                  }`}
-                >
-                  {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                  <span>{opt.shortLabel}</span>
-                </button>
-              );
-            })}
-
-            <button
-              onClick={() => setIsPhotoModalOpen(true)}
-              className="p-1.5 bg-stone-900/90 text-amber-400 hover:text-white hover:bg-amber-500/20 rounded-xl border border-amber-500/40 transition-colors flex items-center gap-1 text-xs px-2.5 font-semibold"
-              title="고화질 원본 크게보기"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">크게보기</span>
-            </button>
-          </div>
-        </div>
-
         {/* Interactive Hero Feature Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
           {heroThemes.map((theme, index) => {
@@ -235,21 +161,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="text-xs text-stone-300 mt-0.5">
                 {currentBg.description}
               </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-1.5 shrink-0 ml-2">
-              {bgOptions.map((opt) => (
-                <button
-                  key={opt.id}
-                  onClick={() => setActiveBg(opt.id)}
-                  className={`px-2 py-1 rounded-lg text-xs font-medium transition-all ${
-                    activeBg === opt.id
-                      ? 'bg-amber-400 text-stone-950 font-bold'
-                      : 'bg-stone-800 text-stone-400 hover:text-white'
-                  }`}
-                >
-                  {opt.shortLabel}
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -391,22 +302,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-stone-800 text-xs text-stone-300">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-semibold text-white">사진 변경:</span>
-                {bgOptions.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setActiveBg(opt.id)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${
-                      activeBg === opt.id
-                        ? 'bg-amber-400 text-stone-950 font-extrabold shadow-sm'
-                        : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-                    }`}
-                  >
-                    {opt.shortLabel}
-                  </button>
-                ))}
-              </div>
+              <div className="font-semibold text-white">{currentBg.alt}</div>
               <button
                 onClick={() => setIsPhotoModalOpen(false)}
                 className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 font-bold hover:from-amber-300 hover:to-amber-400 transition-colors shadow-md"

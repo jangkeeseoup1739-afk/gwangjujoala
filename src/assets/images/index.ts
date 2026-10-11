@@ -9,38 +9,38 @@
  */
 
 // ── 기본 사진 (photos/ 폴더에 같은 이름의 사진이 없을 때 쓰임) ──────────────
-import heroDefault from './hero.jpg';
-import brightDefault from './bright.jpg';
-import birdeyeDefault from './birdeye.png';
-import elevationDefault from './elevation.png';
-import elevationDetailDefault from './elevation-detail.png';
+import heroDefault from './hero.webp';
+import brightDefault from './bright.webp';
+import birdeyeDefault from './birdeye.webp';
+import elevationDefault from './elevation.webp';
+import elevationDetailDefault from './elevation-detail.webp';
 
-import livingDefault from './living.jpg';
-import kitchenDefault from './kitchen.jpg';
-import bedroomRenderDefault from './bedroom-render.jpg';
-import dressroomRenderDefault from './dressroom-render.jpg';
-import bathroomDefault from './bathroom.jpg';
-import parkDefault from './park.jpg';
-import semiconductorDefault from './semiconductor.jpg';
-import loungeDefault from './lounge.jpg';
+import livingDefault from './living.webp';
+import kitchenDefault from './kitchen.webp';
+import bedroomRenderDefault from './bedroom-render.webp';
+import dressroomRenderDefault from './dressroom-render.webp';
+import bathroomDefault from './bathroom.webp';
+import parkDefault from './park.webp';
+import semiconductorDefault from './semiconductor.webp';
+import loungeDefault from './lounge.webp';
 
 // 실제 모델하우스 촬영 사진
-import bedroomDefault from './bedroom.jpg';
-import dressroomDefault from './dressroom.jpg';
-import entranceDefault from './entrance.jpg';
-import terraceDefault from './terrace.jpg';
+import bedroomDefault from './bedroom.webp';
+import dressroomDefault from './dressroom.webp';
+import entranceDefault from './entrance.webp';
+import terraceDefault from './terrace.webp';
 
 // 공식 배치도 · 동호수 · 입면도
-import bl1Default from './bl1.png';
-import bl1UnitsDefault from './bl1-units.png';
-import bl1UnitsDetailDefault from './bl1-units-detail.png';
-import bl21Default from './bl2-1.png';
-import bl21UnitsDefault from './bl2-1-units.png';
-import bl21UnitsDetailDefault from './bl2-1-units-detail.png';
-import bl22Default from './bl2-2.png';
-import bl22DetailDefault from './bl2-2-detail.png';
-import bl22UnitsDefault from './bl2-2-units.png';
-import bl22UnitsDetailDefault from './bl2-2-units-detail.png';
+import bl1Default from './bl1.webp';
+import bl1UnitsDefault from './bl1-units.webp';
+import bl1UnitsDetailDefault from './bl1-units-detail.webp';
+import bl21Default from './bl2-1.webp';
+import bl21UnitsDefault from './bl2-1-units.webp';
+import bl21UnitsDetailDefault from './bl2-1-units-detail.webp';
+import bl22Default from './bl2-2.webp';
+import bl22DetailDefault from './bl2-2-detail.webp';
+import bl22UnitsDefault from './bl2-2-units.webp';
+import bl22UnitsDetailDefault from './bl2-2-units-detail.webp';
 
 // ── photos/ 폴더 사진 수집 ────────────────────────────────────────────────
 // 빌드 시점에 photos/ 폴더를 훑습니다. 폴더가 비어 있으면 빈 객체가 되어

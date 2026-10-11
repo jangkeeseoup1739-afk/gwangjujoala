@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
-import { APP_IMAGES } from '../assets/images';
+import { APP_IMAGES, photoSlot } from '../assets/images';
 import { MapPin, Navigation, Copy, Check, Phone, Car, Train, Calendar, Sparkles } from 'lucide-react';
 
 interface ModelHouseLocationSectionProps {
@@ -9,6 +9,11 @@ interface ModelHouseLocationSectionProps {
 
 export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps> = ({ onOpenPassModal }) => {
   const [copied, setCopied] = useState(false);
+
+  const address = CONSULTATION_CONFIG.modelHouseAddress;
+  const mapImage = photoSlot('map');
+  const naverMapUrl = `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
+  const kakaoMapUrl = `https://map.kakao.com/?q=${encodeURIComponent(address)}`;
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(CONSULTATION_CONFIG.modelHouseAddress);
@@ -38,73 +43,66 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
             <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-gold" />
-                <span className="font-bold text-ink text-base">견본주택 약도 안내</span>
+                <span className="font-bold text-ink text-base">견본주택 위치</span>
               </div>
               <span className="text-xs text-gold font-semibold bg-gold-tint px-2.5 py-1 rounded border border-gold-line">
                 방문 예약 필수제 운영
               </span>
             </div>
 
-            {/* Stylized Architectural Map Diagram */}
-            <div className="relative aspect-[16/10] bg-surface rounded-xl border border-line overflow-hidden p-6 flex flex-col justify-between">
-              {/* Rivers & Highways simulation matching user ticket */}
-              <div className="absolute inset-0 pointer-events-none opacity-70">
-                {/* River 영산강 & 광주천 */}
-                <div className="absolute top-0 bottom-0 left-8 w-10 bg-sky-100 -rotate-12 border-x border-sky-300 flex items-center justify-center">
-                  <span className="text-[10px] text-sky-700 -rotate-90 font-mono tracking-widest">영산강</span>
-                </div>
-                <div className="absolute bottom-4 left-16 right-0 h-10 bg-sky-50 -rotate-6 border-y border-sky-600/20 flex items-center justify-center">
-                  <span className="text-[10px] text-sky-700 font-mono tracking-widest">광주천</span>
-                </div>
-                {/* Road grid */}
-                <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-line-strong" />
-                <div className="absolute top-1/3 left-0 right-0 h-[1px] bg-line-strong" />
-                <div className="absolute top-2/3 left-0 right-0 h-[1px] bg-line-strong" />
-                <div className="absolute left-1/3 top-0 bottom-0 w-[1px] bg-line-strong" />
-                <div className="absolute left-2/3 top-0 bottom-0 w-[1px] bg-line-strong" />
-              </div>
+            {/* 지도.
+                photos/map.jpg 를 넣으면 그 이미지(예: 네이버 지도 캡처)를 쓰고,
+                없으면 구글 지도를 그대로 띄운다. 둘 다 API 키가 필요 없다. */}
+            <div className="relative aspect-[16/10] rounded-xl border border-line overflow-hidden bg-surface-3">
+              {mapImage ? (
+                <a
+                  href={naverMapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <img
+                    src={mapImage}
+                    alt={`견본주택 위치 — ${CONSULTATION_CONFIG.modelHouseAddress}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              ) : (
+                <iframe
+                  title="중앙공원 롯데캐슬 시그니처 견본주택 위치"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    CONSULTATION_CONFIG.modelHouseAddress,
+                  )}&hl=ko&z=16&output=embed`}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              )}
+            </div>
 
-              {/* Surrounding Landmark Labels */}
-              <div className="relative z-10 flex justify-between items-start text-[11px] text-ink-soft">
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  유덕 IC
-                </div>
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  상무소각장
-                </div>
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  CGV / 롯데마트
-                </div>
-              </div>
-
-              {/* Pinpoint Center: Model House */}
-              <div className="relative z-20 mx-auto my-auto text-center">
-                <div className="inline-block p-4 rounded-2xl bg-gold-tint-2 border-2 border-gold-fill shadow-2xl shadow-gold-fill-2/25 animate-pulse">
-                  <div className="flex items-center gap-2 text-gold font-bold text-sm sm:text-base">
-                    <span className="w-3 h-3 rounded-full bg-red-500 animate-ping inline-block" />
-                    <span>견본주택 (모델하우스)</span>
-                  </div>
-                  <div className="text-ink text-xs sm:text-sm font-semibold mt-1">
-                    {CONSULTATION_CONFIG.modelHouseAddress}
-                  </div>
-                  <div className="text-gold text-[11px] mt-0.5 font-medium">
-                    상무시민공원 종합운동장 맞은편
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom surrounding landmarks */}
-              <div className="relative z-10 flex justify-between items-end text-[11px] text-ink-soft">
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  광주환경공단
-                </div>
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  계수초 / 운천초 / 전남중
-                </div>
-                <div className="bg-surface-2 px-2 py-1 rounded border border-line-strong">
-                  광주서부경찰서
-                </div>
-              </div>
+            {/* 지도 앱으로 바로 열기 */}
+            <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <a
+                href={naverMapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-surface-3 hover:bg-line-strong text-ink border border-line-strong rounded-lg text-xs font-bold transition-all"
+              >
+                <Navigation className="w-3.5 h-3.5 text-gold" />
+                <span>네이버 지도로 길찾기</span>
+              </a>
+              <a
+                href={kakaoMapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 bg-surface-3 hover:bg-line-strong text-ink border border-line-strong rounded-lg text-xs font-bold transition-all"
+              >
+                <Navigation className="w-3.5 h-3.5 text-gold" />
+                <span>카카오맵으로 길찾기</span>
+              </a>
             </div>
 
             {/* Address bar & copy action */}
@@ -128,7 +126,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
                   <span>{copied ? '주소 복사완료' : '주소 복사하기'}</span>
                 </button>
                 <a
-                  href={`https://map.naver.com/v5/search/${encodeURIComponent(CONSULTATION_CONFIG.modelHouseAddress)}`}
+                  href={naverMapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold rounded-lg text-xs font-bold transition-all"

@@ -196,31 +196,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* 3 Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 max-w-2xl mx-auto mb-8 w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3 max-w-3xl mx-auto mb-8 w-full">
           {/* Button 1: 전화 상담하기 */}
           <a
             href={CONSULTATION_CONFIG.phoneTelLink}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base sm:text-lg font-bold text-stone-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-200 shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-500/30"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl text-sm sm:text-base font-bold whitespace-nowrap text-stone-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-200 shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-500/30"
           >
-            <Phone className="w-5 h-5 fill-stone-950" />
+            <Phone className="w-4 h-4 fill-stone-950 shrink-0" />
             <span>전화 상담하기</span>
           </a>
 
           {/* Button 2: 분양 정보 문의하기 */}
           <button
             onClick={onScrollToConsultation}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base sm:text-lg font-bold text-white bg-stone-800 hover:bg-stone-700 border border-stone-600 hover:border-amber-400/60 shadow-md transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-stone-600/30"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl text-sm sm:text-base font-bold whitespace-nowrap text-white bg-stone-800 hover:bg-stone-700 border border-stone-600 hover:border-amber-400/60 shadow-md transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-stone-600/30"
           >
-            <FileText className="w-5 h-5 text-amber-400" />
+            <FileText className="w-4 h-4 text-amber-400 shrink-0" />
             <span>분양 정보 문의하기</span>
           </button>
 
           {/* Button 3: VIP 방문예약증 발급 */}
           <button
             onClick={onOpenPassModal}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base sm:text-lg font-bold text-amber-300 bg-amber-950/50 hover:bg-amber-900/60 border border-amber-600/60 shadow-md transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-800/40"
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-xl text-sm sm:text-base font-bold whitespace-nowrap text-amber-300 bg-amber-950/50 hover:bg-amber-900/60 border border-amber-600/60 shadow-md transition-all transform hover:-translate-y-1 focus:ring-4 focus:ring-amber-800/40"
           >
-            <Calendar className="w-5 h-5 text-amber-400" />
+            <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
             <span>VIP 방문예약증 발급</span>
           </button>
         </div>

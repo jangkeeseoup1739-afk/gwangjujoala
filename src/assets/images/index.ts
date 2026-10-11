@@ -77,6 +77,14 @@ export function floorPlanPhoto(planId: string): string | undefined {
   return bySlot.get(`plan-${planId.toLowerCase()}`);
 }
 
+/**
+ * photos/ 에 넣었을 때만 쓰이는 선택 사진.
+ *   photoSlot('map')  →  photos/map.jpg 가 있으면 그 주소, 없으면 undefined
+ */
+export function photoSlot(slot: string): string | undefined {
+  return bySlot.get(slot.toLowerCase());
+}
+
 /** photos/ 폴더에서 실제로 교체된 슬롯 목록 (개발 중 확인용) */
 export const OVERRIDDEN_SLOTS: string[] = [...bySlot.keys()].sort();
 

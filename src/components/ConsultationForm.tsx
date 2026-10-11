@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
+import { FLOOR_PLANS } from '../data/projectData';
 import { submitLead, buildSmsHref, buildSmsText, type Lead } from '../config/form';
 import { Phone, Calendar, CheckCircle2, ShieldCheck, AlertCircle, Sparkles, Send, User, MessageSquare, Clock, Copy, Check } from 'lucide-react';
 
@@ -13,7 +14,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
     phone: '',
     visitDate: new Date().toISOString().split('T')[0],
     visitTime: '14:00',
-    unitType: '102㎡ (구 39평형)',
+    unitType: '102 (전용 102.9716㎡)',
     inquiryTopic: '분양가 및 잔여호실 안내',
     notes: '',
     agreePrivacy: true,
@@ -342,13 +343,12 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
                   onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
                   className="w-full px-4 py-3 bg-surface-2 border border-line-strong focus:border-gold-fill rounded-xl text-ink text-sm focus:outline-none focus:ring-1 focus:ring-gold-fill"
                 >
-                  <option value="84㎡ (구 34평형)">84㎡ (구 34평형)</option>
-                  <option value="102㎡ (구 39평형)">102㎡ (구 39평형 - 판상형 4BAY)</option>
-                  <option value="121㎡ (구 45평형)">121㎡ (구 45평형 - 초광폭 거실)</option>
-                  <option value="139A㎡ (구 52평형)">139A㎡ (구 52평형 - 11자형 주방)</option>
-                  <option value="139B-2㎡ (구 52평형)">139B-2㎡ (구 52평형 - 타워뷰)</option>
-                  <option value="139C㎡ (구 52평형)">139C㎡ (구 52평형 - 영구조망)</option>
-                  <option value="펜트하우스 (166~233P)">펜트하우스 (166~233P㎡)</option>
+                  {FLOOR_PLANS.map((plan) => (
+                    <option key={plan.id} value={`${plan.name} (전용 ${plan.areaDedicated})`}>
+                      {plan.name} — 전용 {plan.areaDedicated} ({plan.areaDedicatedPyeong})
+                    </option>
+                  ))}
+                  <option value="아직 정하지 못함">아직 정하지 못했습니다 (상담 후 결정)</option>
                 </select>
               </div>
 

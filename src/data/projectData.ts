@@ -2,17 +2,21 @@ import { APP_IMAGES } from '../assets/images';
 
 export interface FloorPlan {
   id: string;
+  /** 화면에 보이는 타입명 (예: 139B-2) */
   name: string;
-  pyeongName: string;
-  areaSupply: string;
+  /** 전용면적 ㎡ / 평 */
   areaDedicated: string;
-  effectiveAreaPyeong: string;
-  householdCount: number;
+  areaDedicatedPyeong: string;
+  /** 공급면적 · 계약면적 · 발코니 확장면적 (도면 표기 그대로) */
+  areaSupply: string;
+  areaContract: string;
+  areaBalcony: string;
+  /** 블럭별 세대수. 해당 블럭에 없으면 생략 */
+  units: { bl1?: number; bl21?: number; bl22?: number; note?: string };
+  /** 총 세대수 */
+  totalUnits: number;
+  /** 도면에 적힌 구조 특화 문구 */
   structure: string;
-  features: string[];
-  description: string;
-  highlights: string[];
-  priceEst: string;
 }
 
 export interface CatalystItem {
@@ -203,125 +207,209 @@ export const CATALYSTS: CatalystItem[] = [
 
 export const FLOOR_PLANS: FloorPlan[] = [
   {
+    id: "84A",
+    name: "84A",
+    areaDedicated: "84.9437㎡",
+    areaDedicatedPyeong: "25.6955평",
+    areaSupply: "113.1797㎡ (34.2369평)",
+    areaContract: "170.8771㎡ (51.6903평)",
+    areaBalcony: "26.3475㎡ (7.9701평)",
+    units: { bl21: 379, bl22: 175, note: "2-1BL 379세대는 임대" },
+    totalUnits: 554,
+    structure: "판상형 4-BAY구조 / 활용도 높은 'ㄷ'자형 주방 설계 / 드레스룸 1EA / 팬트리 2EA",
+  },
+  {
+    id: "84B",
+    name: "84B",
+    areaDedicated: "84.9841㎡",
+    areaDedicatedPyeong: "25.7077평",
+    areaSupply: "113.7747㎡ (34.4168평)",
+    areaContract: "171.4995㎡ (51.8786평)",
+    areaBalcony: "24.6600㎡ (7.4597평)",
+    units: { bl21: 29, bl22: 31, note: "2-1BL 29세대는 임대" },
+    totalUnits: 60,
+    structure: "탑상형 구조 / 남서측 2개면 간섭 없는 조망 가능 / 팬트리 2EA / 드레스룸 1EA",
+  },
+  {
     id: "102",
-    name: "102㎡",
-    pyeongName: "구 39평형",
-    areaSupply: "공급 약 130㎡",
-    areaDedicated: "전용 102.5㎡ (전 31평)",
-    effectiveAreaPyeong: "서비스확장 포함 실사용 64.7평형대",
-    householdCount: 164,
-    structure: "판상형 4-BAY / 팬트리 2EA / 알파룸 / 'ㄷ'자형 주방",
-    priceEst: "총층 9억대",
-    features: [
-      "통풍과 일조를 극대화한 판상형 4BAY 정남향/남동향 배치",
-      "넉넉한 수납을 위한 대형 팬트리 2개소 기본 설계",
-      "가족 구성원에 맞춘 라이프스타일 룸 (알파룸) 제공",
-      "주부의 동선을 배려한 효율적인 와이드 'ㄷ'자형 주방"
-    ],
-    description:
-      "넓은 거실과 쾌적한 맞통풍 구조로 실거주 선호도가 가장 높은 39평형 대표 타입입니다.",
-    highlights: ["총 164세대", "판상형 4BAY", "더블 팬트리", "알파룸 특화"]
+    name: "102",
+    areaDedicated: "102.9716㎡",
+    areaDedicatedPyeong: "31.1489평",
+    areaSupply: "129.8738㎡ (39.2868평)",
+    areaContract: "194.0776㎡ (58.7085평)",
+    areaBalcony: "32.7300㎡ (9.9008평)",
+    units: { bl22: 164 },
+    totalUnits: 164,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA / 드레스룸 / 알파룸 / 활용도 높은 'ㄷ'자형 주방",
+  },
+  {
+    id: "114",
+    name: "114",
+    areaDedicated: "114.9621㎡",
+    areaDedicatedPyeong: "34.7760평",
+    areaSupply: "146.2016㎡ (44.2260평)",
+    areaContract: "233.9871㎡ (70.7811평)",
+    areaBalcony: "34.0618㎡ (10.3037평)",
+    units: { bl1: 471 },
+    totalUnits: 471,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA / 드레스룸 / 알파룸 / 활용도 높은 'ㄷ'자형 주방",
+  },
+  {
+    id: "119A",
+    name: "119A",
+    areaDedicated: "119.9422㎡",
+    areaDedicatedPyeong: "36.2825평",
+    areaSupply: "152.3365㎡ (46.0818평)",
+    areaContract: "243.9249㎡ (73.7873평)",
+    areaBalcony: "35.9750㎡ (10.8824평)",
+    units: { bl1: 99 },
+    totalUnits: 99,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA / 드레스룸 / 알파룸 / 활용도 높은 'ㄷ'자형 주방",
+  },
+  {
+    id: "119B",
+    name: "119B",
+    areaDedicated: "119.9730㎡",
+    areaDedicatedPyeong: "36.2918평",
+    areaSupply: "152.2792㎡ (46.0645평)",
+    areaContract: "243.8911㎡ (73.7771평)",
+    areaBalcony: "35.7411㎡ (10.8117평)",
+    units: { bl1: 152 },
+    totalUnits: 152,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA / 드레스룸 / '11자형' 주방 특화 / 간섭없는 남측 공원·호수 조망 / 주방 북측 통창",
   },
   {
     id: "121",
-    name: "121㎡",
-    pyeongName: "구 45평형",
-    areaSupply: "공급 약 151㎡",
-    areaDedicated: "전용 121.2㎡ (전 36평)",
-    effectiveAreaPyeong: "서비스확장 포함 실사용 81.6평형대",
-    householdCount: 170,
-    structure: "판상형 4-BAY / 팬트리 2EA / 알파룸 / 와이드 거실",
-    priceEst: "총층 10억대",
-    features: [
-      "압도적인 개방감을 선사하는 초광폭 와이드 거실 공간",
-      "안방 대형 워크인 드레스룸 및 파우더룸 풀옵션",
-      "다이닝 공간과 주방의 분리·연계가 뛰어난 와이드 레이아웃",
-      "중대형 프리미엄을 온전히 누릴 수 있는 고급스러운 실내 구성"
-    ],
-    description:
-      "호수공원의 사계절 풍경을 거실 가득 담아내는 여유로운 45평형 시그니처 평면입니다.",
-    highlights: ["총 170세대", "초광폭 거실", "더블 팬트리", "호수조망 특화"]
+    name: "121",
+    areaDedicated: "121.9554㎡",
+    areaDedicatedPyeong: "36.8915평",
+    areaSupply: "150.5013~153.1347㎡ (45.5286~46.3232평)",
+    areaContract: "227.6721~229.1752㎡ (68.8708~69.3256평)",
+    areaBalcony: "33.7589㎡ (10.2121평)",
+    units: { bl21: 144, bl22: 170 },
+    totalUnits: 314,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA / 알파룸 / 드레스룸 / 활용도 높은 'ㄷ'자형 주방 / 넓은 거실 공간 확보",
+  },
+  {
+    id: "135A",
+    name: "135A",
+    areaDedicated: "135.9742㎡",
+    areaDedicatedPyeong: "41.1322평",
+    areaSupply: "172.7908㎡ (52.2692평)",
+    areaContract: "276.6213㎡ (83.6779평)",
+    areaBalcony: "38.9340㎡ (11.7775평)",
+    units: { bl1: 102 },
+    totalUnits: 102,
+    structure: "판상형 4BAY 구조 / 팬트리 2EA·침실3 / 알파룸 / 드레스룸 / '11자형' 주방 / 남서측 간섭 없는 도심 조망",
+  },
+  {
+    id: "135B",
+    name: "135B",
+    areaDedicated: "135.9796㎡",
+    areaDedicatedPyeong: "41.1338평",
+    areaSupply: "173.1419㎡ (52.3754평)",
+    areaContract: "276.9765㎡ (83.7854평)",
+    areaBalcony: "36.1078㎡ (10.9226평)",
+    units: { bl1: 102 },
+    totalUnits: 102,
+    structure: "탑상형 구조 / 팬트리 3EA / 침실3 / 드레스룸 / 남서측 2개면 조망 가능 / 안방 옆 침실3 특화",
   },
   {
     id: "139A",
-    name: "139A㎡",
-    pyeongName: "구 52평형",
-    areaSupply: "공급 약 174㎡",
-    areaDedicated: "전용 139.1㎡ (전 42평)",
-    effectiveAreaPyeong: "서비스확장 포함 실사용 95.2평형대",
-    householdCount: 123,
-    structure: "판상형 4-BAY / 팬트리 2EA / 드레스룸 2EA / 알파룸 / 11자형 주방",
-    priceEst: "총층 12억 3천",
-    features: [
-      "호텔 스위트룸을 연상시키는 마스터존 드레스룸 2개소 설계",
-      "대면형 '11'자형 하이엔드 주방 및 아일랜드 카운터",
-      "초대형 거실과 주방이 연결된 파노라마 리빙 스페이스",
-      "하이엔드 롯데캐슬 시그니처의 품격을 보여주는 최고급 마감"
-    ],
-    description:
-      "국내 최고 수준의 대형 평형 설계로 프라이빗한 럭셔리 라이프를 실현합니다.",
-    highlights: ["총 123세대", "대면형 11자 주방", "드레스룸 2EA", "마스터존 특화"]
+    name: "139A",
+    areaDedicated: "139.9830㎡",
+    areaDedicatedPyeong: "42.3449평",
+    areaSupply: "172.3180~175.3407㎡ (52.1262~53.0406평)",
+    areaContract: "260.8962~262.6216㎡ (78.9211~79.4430평)",
+    areaBalcony: "37.0800㎡ (11.2167평)",
+    units: { bl21: 185, bl22: 123 },
+    totalUnits: 308,
+    structure: "판상형 4-BAY 구조 / 팬트리 2EA·드레스룸 2EA / 알파룸 / 넓은 거실 공간 확보 / '11자형' 주방",
   },
   {
-    id: "139B",
-    name: "139B-2㎡",
-    pyeongName: "구 52평형",
-    areaSupply: "공급 약 174㎡",
-    areaDedicated: "전용 139.3㎡ (전 42평)",
-    effectiveAreaPyeong: "서비스확장 포함 실사용 103.0평형대",
-    householdCount: 129,
-    structure: "탑상형 타워뷰 / 팬트리 2EA / 알파룸 1EA / 베타룸 1EA / 드레스룸 1EA",
-    priceEst: "총층 12억 4천",
-    features: [
-      "파노라마 2면 개방형 조망으로 풍암호수 뷰 극대화",
-      "알파룸에 더해진 프라이빗 베타룸 구성으로 독립 공간 확보",
-      "현대적이고 감각적인 타워형 평면으로 젊은 고소득층 선호",
-      "풍부한 자연 채광과 도심 스카이라인 뷰"
-    ],
-    description:
-      "풍암호수와 광주 도심 전경을 파노라마로 누리는 특별한 조망 특화 평면입니다.",
-    highlights: ["총 129세대", "양면 개방형 조망", "알파룸+베타룸", "실사용 103평형대"]
+    id: "139B-1",
+    name: "139B-1",
+    areaDedicated: "139.9988㎡",
+    areaDedicatedPyeong: "42.3496평",
+    areaSupply: "173.2028㎡ (52.3938평)",
+    areaContract: "261.7910㎡ (79.1918평)",
+    areaBalcony: "45.8311㎡ (13.8639평)",
+    units: { bl21: 20 },
+    totalUnits: 20,
+    structure: "탑상형 구조 / 팬트리 2EA·드레스룸 2EA / 알파룸 1EA·베타룸 1EA / 3개면 개방형으로 북서·북동·남동향 조망 가능",
+  },
+  {
+    id: "139B-2",
+    name: "139B-2",
+    areaDedicated: "139.9940㎡",
+    areaDedicatedPyeong: "42.3482평",
+    areaSupply: "175.6770㎡ (53.1423평)",
+    areaContract: "262.9647㎡ (79.5468평)",
+    areaBalcony: "36.3191㎡ (10.9865평)",
+    units: { bl22: 129 },
+    totalUnits: 129,
+    structure: "탑상형 구조 / 팬트리 2EA·알파룸 1EA·베타룸 1EA·드레스룸 1EA",
   },
   {
     id: "139C",
-    name: "139C㎡",
-    pyeongName: "구 52평형",
-    areaSupply: "공급 약 174㎡",
-    areaDedicated: "전용 139.4㎡ (전 42평)",
-    effectiveAreaPyeong: "서비스확장 포함 실사용 102.9평형대",
-    householdCount: 126,
-    structure: "판상형 4-BAY / 팬트리 2EA / 드레스룸 2EA / 알파룸 1EA",
-    priceEst: "총층 12억 6천",
-    features: [
-      "안방 남서향 간섭 없는 파노라마 특급 조망권 확보",
-      "안방 드레스룸 특화로 사계절 의류 및 명품 컬렉션 수납",
-      "완벽한 판상형 4BAY 구조로 환기와 채광 최적화",
-      "가족 간의 프라이버시가 보장되는 스마트한 공간 동선"
-    ],
-    description:
-      "남서측 간섭 없는 영구 조망과 특화 드레스룸을 갖춘 인기 평형입니다.",
-    highlights: ["총 126세대", "간섭없는 특급조망", "드레스룸 2EA", "남서향 판상형"]
+    name: "139C",
+    areaDedicated: "139.9600㎡",
+    areaDedicatedPyeong: "42.3379평",
+    areaSupply: "172.5560~175.5782㎡ (52.1820~53.1124평)",
+    areaContract: "261.1197~262.8447㎡ (78.9887~79.5108평)",
+    areaBalcony: "47.1900㎡ (14.2750평)",
+    units: { bl21: 77, bl22: 126 },
+    totalUnits: 203,
+    structure: "판상형 4-BAY 구조 / 팬트리 2EA·드레스룸 2EA·알파룸 1EA / 안방 드레스룸 특화 / 남서측 간섭 없는 조망 가능",
   },
   {
-    id: "penthouse",
-    name: "펜트하우스",
-    pyeongName: "166㎡ ~ 233P㎡",
-    areaSupply: "공급 200㎡ ~ 300㎡ 이상",
-    areaDedicated: "전용 166㎡ / 211P㎡ / 233P㎡ (전 50평~70평)",
-    effectiveAreaPyeong: "확장 및 테라스 103평 ~ 315평형대",
-    householdCount: 10,
-    structure: "하이엔드 복층 / 와이드 루프탑 테라스 / 프라이빗 펜트하우스",
-    priceEst: "최고급 분양가 책정",
-    features: [
-      "단지 최상층에 위치한 극소수 VIP를 위한 단 10세대",
-      "풍암호수와 무등산을 한눈에 내려다보는 최고급 루프 테라스",
-      "독립된 마스터 스위트와 최고급 수입 자재 풀인테리어",
-      "사생활 보호와 프라이빗 보안 시스템 완비"
-    ],
-    description:
-      "광주를 대표하는 상위 0.1%를 위한 단 하나의 하이엔드 펜트하우스입니다.",
-    highlights: ["희소 10세대", "루프탑 테라스", "무등산·호수 360° 뷰", "최고급 마감"]
-  }
+    id: "139D",
+    name: "139D",
+    areaDedicated: "139.9912㎡",
+    areaDedicatedPyeong: "42.3473평",
+    areaSupply: "173.7936㎡ (52.5726평)",
+    areaContract: "262.3771㎡ (79.3691평)",
+    areaBalcony: "37.2900㎡ (11.2802평)",
+    units: { bl21: 77 },
+    totalUnits: 77,
+    structure: "탑상형 구조 / 팬트리 4EA·알파룸 1EA·드레스룸 1EA / 안방 옆 알파룸 특화",
+  },
+  {
+    id: "166",
+    name: "166",
+    areaDedicated: "166.9819㎡",
+    areaDedicatedPyeong: "50.5120평",
+    areaSupply: "208.1422~211.7479㎡ (62.9630~64.0537평)",
+    areaContract: "313.8048~315.8628㎡ (94.9280~95.5485평)",
+    areaBalcony: "41.5439㎡ (12.5670평)",
+    units: { bl21: 4, bl22: 10 },
+    totalUnits: 14,
+    structure: "판상형 4-BAY구조 / 팬트리 1EA·알파룸 1EA·드레스룸 1EA / 지하1층 특화 테라스 구조",
+  },
+  {
+    id: "211",
+    name: "211",
+    areaDedicated: "211.6191㎡",
+    areaDedicatedPyeong: "64.0148평",
+    areaSupply: "272.1755㎡ (82.3331평)",
+    areaContract: "433.7689㎡ (131.2151평)",
+    areaBalcony: "61.4850㎡ (18.5992평)",
+    units: { bl1: 2 },
+    totalUnits: 2,
+    structure: "펜트하우스 / 침실1 드레스룸·침실2 화장대 / 복층형 테라스 특화",
+  },
+  {
+    id: "233",
+    name: "233",
+    areaDedicated: "233.8898㎡",
+    areaDedicatedPyeong: "70.7517평",
+    areaSupply: "298.4531㎡ (90.2821평)",
+    areaContract: "477.0525㎡ (144.3084평)",
+    areaBalcony: "54.5124㎡ (16.4900평)",
+    units: { bl1: 1 },
+    totalUnits: 1,
+    structure: "펜트하우스 최상위 타입 / 침실 3 + 드레스룸 다수 / 3면 테라스 특화",
+  },
 ];
 
 export const MODELHOUSE_UNITS_GALLERY: UnitPhoto[] = [

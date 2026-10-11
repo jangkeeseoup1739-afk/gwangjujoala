@@ -25,7 +25,7 @@ export default function App() {
     name: 'VIP 고객',
     phone: '',
     date: '방문 예약 진행 중',
-    unitType: '102㎡ (구 39평형)',
+    unitType: '102 (전용 102.9716㎡)',
   });
 
   const scrollToSection = (sectionId: string) => {
@@ -53,7 +53,9 @@ export default function App() {
         onScrollToSection={scrollToSection}
       />
 
-      <main className="flex-grow relative z-10">
+      {/* z-index 를 주면 쌓임 맥락이 생겨 이 안의 모달이 네비게이션(z-40) 위로
+          올라가지 못한다. 그래서 relative 만 둔다. */}
+      <main className="flex-grow relative">
         {/* 2. Hero Section (Strictly fulfills Requirement 2) */}
         <HeroSection
           onScrollToConsultation={() => scrollToSection('consultation')}

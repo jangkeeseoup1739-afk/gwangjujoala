@@ -334,25 +334,26 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
         {activeTab === 'infra' && (
           <div className="animate-in fade-in duration-200 space-y-6">
             {/* Semiconductor vision banner image */}
-            <div className="relative aspect-[21/9] w-full rounded-2xl overflow-hidden border-2 border-gold-bright/45 shadow-2xl">
-              <img
-                src={APP_IMAGES.semiconductorVision}
-                alt="895조 반도체 메가 클러스터 및 군공항 이전 종전부지 스마트시티 비전"
-                className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-              <div className="absolute inset-0 bg-gradient-to-t from-photo-scrim/88 via-photo-scrim/35 to-transparent" />
-              <div className="absolute bottom-4 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <div className="w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-xl bg-surface-2">
+              <div className="relative aspect-[16/9] w-full bg-photo-scrim">
+                <img
+                  src={APP_IMAGES.semiconductorVision}
+                  alt="895조 반도체 메가 클러스터 및 군공항 이전 종전부지 스마트시티 비전"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-gold-line">
                 <div>
-                  <div className="text-xs text-gold-bright font-mono font-bold uppercase tracking-wider">
+                  <div className="text-[11px] text-gold font-mono font-bold uppercase tracking-wider">
                     GWANGJU HIGH-TECH INNOVATION BELT
                   </div>
-                  <div className="text-lg sm:text-2xl font-black text-on-photo">
-                    895조 국가 반도체 메가 클러스터 & 군공항 종전부지 에어로트로폴리스
+                  <div className="text-sm sm:text-base font-bold text-ink">
+                    895조 국가 반도체 메가 클러스터 &amp; 군공항 종전부지 에어로트로폴리스
                   </div>
                 </div>
-                <span className="text-xs font-bold text-gold-bright bg-gold-deep/85 px-3 py-1 rounded-full border border-gold-bright/50 self-start sm:self-auto">
+                <span className="shrink-0 self-start sm:self-auto text-xs font-bold text-gold bg-gold-tint-2 px-3 py-1.5 rounded-full border border-gold-line">
                   중앙공원 롯데캐슬 직접 수혜
                 </span>
               </div>

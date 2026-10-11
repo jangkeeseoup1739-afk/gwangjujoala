@@ -33,7 +33,8 @@ export const MegaCatalystSection: React.FC<MegaCatalystSectionProps> = ({ onScro
         </div>
 
         {/* High-Tech Mega Vision Graphic Card */}
-        <div className="relative aspect-[21/9] sm:aspect-[24/9] w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-2xl mb-12 group bg-photo-scrim">
+        <div className="w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-2xl mb-12 bg-surface-2">
+          <div className="relative aspect-[16/9] w-full group bg-photo-scrim">
           <img
             src={APP_IMAGES.semiconductorVision}
             alt="국가 반도체 895조 메가 클러스터 & 광주 군공항 종전부지 스마트시티 미래비전"
@@ -41,24 +42,20 @@ export const MegaCatalystSection: React.FC<MegaCatalystSectionProps> = ({ onScro
                       loading="lazy"
                       decoding="async"
                     />
-          <div className="absolute inset-0 bg-gradient-to-t from-photo-scrim/92 via-photo-scrim/35 to-transparent" />
-          <div className="absolute bottom-4 left-6 right-6 flex flex-col md:flex-row md:items-end justify-between gap-3">
+          </div>
+
+          <div className="px-5 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-gold-line">
             <div>
-              <div className="text-xs text-gold-bright font-mono font-bold uppercase tracking-wider mb-1">
+              <div className="text-[11px] text-gold font-mono font-bold uppercase tracking-wider mb-0.5">
                 NATIONAL HIGH-TECH STRATEGY · 895 TRILLION WON
               </div>
-              <div className="text-xl sm:text-2xl font-black text-on-photo">
-                대한민국 반도체 메가 클러스터 &amp; 군공항 종전부지 248만평 첨단 미래도시
-              </div>
-              <div className="text-xs sm:text-sm text-on-photo-soft mt-1">
+              <div className="text-sm sm:text-base font-bold text-ink">
                 광주 서구 랜드마크 중앙공원 롯데캐슬 시그니처가 최고 수혜지로 급부상합니다.
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-gold-bright bg-gold-deep/85 px-3 py-1.5 rounded-full border border-gold-bright/50">
-                최대 수혜 단지
-              </span>
-            </div>
+            <span className="shrink-0 self-start sm:self-auto text-xs font-bold text-gold bg-gold-tint-2 px-3 py-1.5 rounded-full border border-gold-line">
+              최대 수혜 단지
+            </span>
           </div>
         </div>
 

@@ -67,6 +67,16 @@ const bySlot = new Map<string, string>(
 const pick = (slot: string, fallback: string): string =>
   bySlot.get(slot) ?? fallback;
 
+/**
+ * 평면도 사진 — 기본 사진이 따로 없는 슬롯.
+ * photos/ 에 넣으면 그 타입 카드에 실제 도면이 뜨고,
+ * 없으면 기존 구조 도식이 그대로 보입니다.
+ *   예) photos/plan-102.jpg  →  102㎡ 타입 평면도
+ */
+export function floorPlanPhoto(planId: string): string | undefined {
+  return bySlot.get(`plan-${planId.toLowerCase()}`);
+}
+
 /** photos/ 폴더에서 실제로 교체된 슬롯 목록 (개발 중 확인용) */
 export const OVERRIDDEN_SLOTS: string[] = [...bySlot.keys()].sort();
 

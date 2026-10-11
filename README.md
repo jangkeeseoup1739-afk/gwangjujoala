@@ -36,6 +36,9 @@
 | `bathroom.jpg` | 인테리어 갤러리 — 욕실 |
 | `lounge.jpg` | 모델하우스 VIP 라운지 |
 | `bl1.png` · `bl2-1.png` · `bl2-2.png` | 블럭별 배치도 |
+| `plan-102.jpg` · `plan-121.jpg` · `plan-139a.jpg` · `plan-139b.jpg` · `plan-139c.jpg` · `plan-penthouse.jpg` | 타입별 평면도 |
+
+> 평면도는 올리기 전에는 구조 도식이 보이고, 올리면 그 자리에 실제 도면이 표시됩니다.
 
 ---
 

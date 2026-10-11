@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
 import { FLOOR_PLANS, FloorPlan } from '../data/projectData';
-import { Maximize2, Check, Phone, Eye, Layers, Compass, Sparkles, Building2, Tag } from 'lucide-react';
+import { floorPlanPhoto } from '../assets/images';
+import { Maximize2, Check, Phone, Eye, Layers, Compass, Sparkles, Building2, Tag, X } from 'lucide-react';
 
 interface FloorPlansSectionProps {
   onScrollToConsultation: () => void;
@@ -9,8 +10,10 @@ interface FloorPlansSectionProps {
 
 export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollToConsultation }) => {
   const [activePlanId, setActivePlanId] = useState<string>('102');
+  const [zoomPhoto, setZoomPhoto] = useState<string | null>(null);
 
   const currentPlan = FLOOR_PLANS.find((p) => p.id === activePlanId) || FLOOR_PLANS[0];
+  const planPhoto = floorPlanPhoto(currentPlan.id);
 
   return (
     <section id="floorplans" className="py-20 bg-surface text-ink border-t border-gold-line">
@@ -75,7 +78,25 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
               </div>
             </div>
 
-            {/* Blueprint Floor Layout Simulation */}
+            {/* 평면도 사진이 올라와 있으면 사진을, 없으면 아래 구조 도식을 보여준다 */}
+            {planPhoto ? (
+              <div
+                onClick={() => setZoomPhoto(planPhoto)}
+                className="relative rounded-lg overflow-hidden border border-line-strong bg-surface-3 cursor-pointer group/plan"
+              >
+                <img
+                  src={planPhoto}
+                  alt={`${currentPlan.name} (${currentPlan.pyeongName}) 평면도`}
+                  className="w-full h-auto object-contain max-h-[520px] mx-auto transition-transform duration-500 group-hover/plan:scale-102"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-surface-2/92 rounded-lg text-[11px] text-gold font-semibold flex items-center gap-1.5 border border-gold-line shadow-sm">
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>평면도 크게보기</span>
+                </div>
+              </div>
+            ) : (
             <div className="relative min-h-[350px] flex flex-col justify-between p-4 bg-surface-3/70 rounded-lg border border-dashed border-line-strong/80">
               {/* Compass & North indicator */}
               <div className="absolute top-4 right-4 flex items-center gap-1.5 text-[11px] text-ink-soft font-mono bg-surface-2/92 px-2.5 py-1 rounded border border-line">
@@ -132,6 +153,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
                 <span>용적률 219.88%</span>
               </div>
             </div>
+            )}
 
             <div className="mt-4 flex items-center justify-between text-xs text-ink-soft">
               <span>* 견본주택 현장에서 건립 세대 실물 유니트를 직접 관람하실 수 있습니다.</span>
@@ -305,6 +327,49 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
           </div>
         </div>
       </div>
+
+      {/* 평면도 사진 확대 보기 */}
+      {zoomPhoto && (
+        <div
+          onClick={() => setZoomPhoto(null)}
+          className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative bg-surface-2 rounded-2xl border-2 border-gold-line shadow-2xl max-w-5xl w-full max-h-[92vh] overflow-auto p-4 sm:p-6"
+          >
+            <div className="flex items-center justify-between mb-3 gap-3">
+              <div className="text-sm font-bold text-ink">
+                {currentPlan.name} <span className="text-ink-soft font-medium">({currentPlan.pyeongName}) 평면도</span>
+              </div>
+              <button
+                onClick={() => setZoomPhoto(null)}
+                className="p-2 rounded-lg text-ink-soft hover:text-on-gold hover:bg-gold-fill border border-line-strong transition-colors"
+                aria-label="닫기"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <img
+              src={zoomPhoto}
+              alt={`${currentPlan.name} 평면도 원본`}
+              className="w-full h-auto object-contain rounded-lg bg-surface-3"
+            />
+            <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs text-ink-soft">
+                ※ 실제 시공 시 일부 사양이 변경될 수 있습니다. 자세한 사항은 담당자에게 문의해 주세요.
+              </span>
+              <a
+                href={CONSULTATION_CONFIG.phoneTelLink}
+                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
+              >
+                <Phone className="w-4 h-4 fill-on-gold" />
+                <span>{currentPlan.name} 상담하기</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

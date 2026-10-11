@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
-import { Phone, Calendar, CheckCircle2, ShieldCheck, AlertCircle, Sparkles, Send, User, MessageSquare, Clock } from 'lucide-react';
+import { submitLead, buildSmsHref, buildSmsText, type Lead } from '../config/form';
+import { Phone, Calendar, CheckCircle2, ShieldCheck, AlertCircle, Sparkles, Send, User, MessageSquare, Clock, Copy, Check } from 'lucide-react';
 
 interface ConsultationFormProps {
   onPassCreated: (passData: { name: string; phone: string; date: string; unitType: string }) => void;
@@ -28,11 +29,29 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
     unitType: string;
   } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** 전송이 확인됐는지 여부 — 확인 불가일 때는 문구를 다르게 보여준다 */
+  const [deliveryConfirmed, setDeliveryConfirmed] = useState(true);
+  /** 전송 실패 시 고객이 직접 보낼 수 있도록 남겨두는 신청 내용 */
+  const [fallbackLead, setFallbackLead] = useState<Lead | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLead = async () => {
+    if (!fallbackLead) return;
+    try {
+      await navigator.clipboard.writeText(buildSmsText(fallbackLead));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      setErrorMessage('복사에 실패했습니다. 내용을 직접 선택해 복사해 주세요.');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+    setFallbackLead(null);
 
-    // Validation
+    // 입력값 검사
     if (!formData.name.trim()) {
       setErrorMessage('성함을 입력해 주세요.');
       return;
@@ -51,55 +70,65 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
 
     setIsSubmitting(true);
 
-    // Realistic API submission simulation with persistence to localStorage
-    setTimeout(() => {
-      try {
-        const leadRecord = {
-          id: 'LC-' + Date.now().toString().slice(-6),
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          visitDate: formData.visitDate,
-          visitTime: formData.visitTime,
-          unitType: formData.unitType,
-          inquiryTopic: formData.inquiryTopic,
-          notes: formData.notes.trim(),
-          manager: CONSULTATION_CONFIG.managerName,
-          managerPhone: CONSULTATION_CONFIG.managerPhone,
-          createdAt: new Date().toISOString(),
-        };
+    const lead: Lead = {
+      id: 'LC-' + Date.now().toString().slice(-6),
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      visitDate: formData.visitDate,
+      visitTime: formData.visitTime,
+      unitType: formData.unitType,
+      inquiryTopic: formData.inquiryTopic,
+      notes: formData.notes.trim(),
+      manager: CONSULTATION_CONFIG.managerName,
+      createdAt: new Date().toISOString(),
+      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+    };
 
-        // Save to localStorage
-        const existing = JSON.parse(localStorage.getItem('lotte_castle_consultations') || '[]');
-        existing.push(leadRecord);
-        localStorage.setItem('lotte_castle_consultations', JSON.stringify(existing));
+    // 전송 실패에 대비해 이 기기에도 한 벌 남겨둔다
+    try {
+      const existing = JSON.parse(localStorage.getItem('lotte_castle_consultations') || '[]');
+      existing.push(lead);
+      localStorage.setItem('lotte_castle_consultations', JSON.stringify(existing));
+    } catch {
+      // 저장 공간이 없어도 전송에는 영향을 주지 않는다
+    }
 
-        // Update state
-        setSubmittedData({
-          name: leadRecord.name,
-          phone: leadRecord.phone,
-          date: `${leadRecord.visitDate} ${leadRecord.visitTime}`,
-          unitType: leadRecord.unitType,
-        });
-        setSubmitSuccess(true);
-        setIsSubmitting(false);
+    const result = await submitLead(lead);
+    setIsSubmitting(false);
 
-        // Inform parent
-        onPassCreated({
-          name: leadRecord.name,
-          phone: leadRecord.phone,
-          date: `${leadRecord.visitDate} ${leadRecord.visitTime}`,
-          unitType: leadRecord.unitType,
-        });
-      } catch (err) {
-        setIsSubmitting(false);
-        setErrorMessage('상담 신청 전송 중 오류가 발생했습니다. 직접 전화 상담을 이용해 주세요.');
-      }
-    }, 700);
+    if (result.status === 'failed') {
+      // 신청 내용을 잃지 않도록 문자/전화로 넘길 수 있게 한다
+      setFallbackLead(lead);
+      setErrorMessage(
+        result.reason === 'not-configured'
+          ? '온라인 접수가 아직 연결되지 않았습니다. 아래 버튼으로 바로 보내주시면 담당자가 확인합니다.'
+          : '네트워크 문제로 접수가 완료되지 않았습니다. 아래 버튼으로 바로 보내주시면 담당자가 확인합니다.',
+      );
+      return;
+    }
+
+    setDeliveryConfirmed(result.status === 'saved');
+    setSubmittedData({
+      name: lead.name,
+      phone: lead.phone,
+      date: `${lead.visitDate} ${lead.visitTime}`,
+      unitType: lead.unitType,
+    });
+    setSubmitSuccess(true);
+
+    onPassCreated({
+      name: lead.name,
+      phone: lead.phone,
+      date: `${lead.visitDate} ${lead.visitTime}`,
+      unitType: lead.unitType,
+    });
   };
 
   const handleReset = () => {
     setSubmitSuccess(false);
     setSubmittedData(null);
+    setFallbackLead(null);
+    setErrorMessage(null);
     setFormData((prev) => ({
       ...prev,
       name: '',
@@ -145,6 +174,13 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
               <p className="text-xs sm:text-sm text-ink-soft">
                 입력하신 연락처로 담당자 {CONSULTATION_CONFIG.managerName}이 신속히 배정되어 세부 분양가 및 모델하우스 동행 안내를 드립니다.
               </p>
+
+              {!deliveryConfirmed && (
+                <p className="mt-3 text-[11px] text-ink-muted max-w-md">
+                  혹시 연락이 늦어지면 {CONSULTATION_CONFIG.managerName}
+                  ({CONSULTATION_CONFIG.managerPhone})에게 직접 전화 주세요.
+                </p>
+              )}
             </div>
 
             {/* Generated Mobile Pass Ticket Card View matching User Photo */}
@@ -155,7 +191,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
               <div className="text-2xl font-black text-gold my-1 font-serif">
                 방 문 예 약 증
               </div>
-              <div className="text-sm font-bold text-yellow-300 mb-3 bg-gold-tint py-1 px-3 rounded-full inline-block border border-yellow-500/30">
+              <div className="text-sm font-bold text-gold mb-3 bg-gold-tint py-1 px-3 rounded-full inline-block border border-gold-line">
                 오시면 꼭 안내데스크에 보여주세요 (방문예약 필수)
               </div>
 
@@ -215,6 +251,49 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
               <div className="p-4 rounded-xl bg-danger-tint border border-danger/40 flex items-start gap-3 text-danger text-xs sm:text-sm">
                 <AlertCircle className="w-5 h-5 text-danger shrink-0" />
                 <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {/* 접수가 실패했을 때 — 신청 내용을 잃지 않도록 바로 보낼 수 있게 한다 */}
+            {fallbackLead && (
+              <div className="p-5 rounded-xl bg-gold-tint border-2 border-gold-line space-y-4">
+                <div className="flex items-center gap-2 text-gold font-bold text-sm">
+                  <Sparkles className="w-4 h-4" />
+                  <span>작성하신 내용을 그대로 담아 두었습니다</span>
+                </div>
+
+                <pre className="p-3.5 rounded-lg bg-surface-2 border border-line text-[11px] sm:text-xs text-ink-soft whitespace-pre-wrap font-sans leading-relaxed">
+                  {buildSmsText(fallbackLead)}
+                </pre>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <a
+                    href={buildSmsHref(CONSULTATION_CONFIG.managerPhone, fallbackLead)}
+                    className="inline-flex items-center justify-center gap-2 py-3 px-4 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    <span>문자로 보내기</span>
+                  </a>
+                  <a
+                    href={CONSULTATION_CONFIG.phoneTelLink}
+                    className="inline-flex items-center justify-center gap-2 py-3 px-4 bg-surface-2 hover:bg-surface-3 text-gold border border-gold-line font-bold text-sm rounded-xl transition-all"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>바로 전화하기</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyLead}
+                    className="inline-flex items-center justify-center gap-2 py-3 px-4 bg-surface-2 hover:bg-surface-3 text-ink-soft border border-line-strong font-bold text-sm rounded-xl transition-all"
+                  >
+                    {copied ? <Check className="w-4 h-4 text-ok" /> : <Copy className="w-4 h-4" />}
+                    <span>{copied ? '복사됨' : '내용 복사'}</span>
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-ink-muted">
+                  ※ 문자 보내기는 휴대폰에서 동작합니다. PC에서는 '내용 복사' 후 보내주시거나 바로 전화 주세요.
+                </p>
               </div>
             )}
 

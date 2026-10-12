@@ -157,7 +157,7 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
                     <div className="text-gold-bright font-bold">
                       풍암호수를 품은 도심 속 초대형 숲세권 파노라마
                     </div>
-                    <span className="text-on-photo-soft bg-photo-scrim/75 px-2 py-0.5 rounded border border-on-photo/25 text-[10px]">
+                    <span className="text-on-photo-soft bg-photo-scrim/75 px-2 py-0.5 rounded border border-on-photo/25 text-[11px]">
                       중앙공원 1지구 특례사업
                     </span>
                   </div>
@@ -269,7 +269,7 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
                         className="w-full h-full object-contain p-1"
                         loading="lazy"
                       />
-                      <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-surface-2/90 rounded text-[10px] text-gold font-bold border border-gold-line shadow">
+                      <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-surface-2/90 rounded text-[11px] text-gold font-bold border border-gold-line shadow">
                         공식 실물 배치도
                       </div>
                     </div>

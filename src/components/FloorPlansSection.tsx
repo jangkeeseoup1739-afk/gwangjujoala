@@ -20,6 +20,10 @@ function unitsLabel(plan: FloorPlan): string {
 
 export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollToConsultation }) => {
   const [openPlan, setOpenPlan] = useState<FloorPlan | null>(null);
+  // 17종을 한 번에 펼치면 모바일에서 스크롤이 너무 길어진다
+  const [showAll, setShowAll] = useState(false);
+  const INITIAL = 8;
+  const visiblePlans = showAll ? FLOOR_PLANS : FLOOR_PLANS.slice(0, INITIAL);
   const openPhoto = openPlan ? floorPlanPhoto(openPlan.id) : undefined;
 
   return (
@@ -41,7 +45,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
 
         {/* 도면 목록 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {FLOOR_PLANS.map((plan, i) => {
+          {visiblePlans.map((plan, i) => {
             const photo = floorPlanPhoto(plan.id);
             return (
               <button
@@ -68,7 +72,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
                     </div>
                   )}
                   {photo && (
-                    <div className="absolute bottom-2 right-2 px-2 py-1 bg-surface-2/92 rounded-md text-[10px] text-gold font-semibold flex items-center gap-1 border border-gold-line opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-2 right-2 px-2 py-1 bg-surface-2/92 rounded-md text-[11px] text-gold font-semibold flex items-center gap-1 border border-gold-line opacity-0 group-hover:opacity-100 transition-opacity">
                       <Maximize2 className="w-3 h-3" />
                       <span>크게보기</span>
                     </div>
@@ -93,6 +97,19 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
             );
           })}
         </div>
+
+        {/* 더보기 */}
+        {!showAll && FLOOR_PLANS.length > INITIAL && (
+          <div className="mt-7 text-center">
+            <button
+              onClick={() => setShowAll(true)}
+              className="press inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-surface-2 hover:bg-surface-3 text-gold border-2 border-gold-line font-bold text-sm rounded-xl shadow-sm transition-all"
+            >
+              <Layers className="w-4 h-4" />
+              <span>평면도 {FLOOR_PLANS.length}종 모두 보기 (+{FLOOR_PLANS.length - INITIAL})</span>
+            </button>
+          </div>
+        )}
 
         {/* 하단 안내 */}
         <div data-reveal className="mt-10 p-5 sm:p-6 rounded-2xl bg-surface-2 border border-gold-line flex flex-col sm:flex-row items-center justify-between gap-4">

@@ -106,11 +106,11 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
                   <div className="w-12 h-12 rounded-full bg-[#8b1528] flex items-center justify-center mb-3 shadow">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
-                  <div className="text-[10px] text-stone-500 mb-0.5">견본주택</div>
+                  <div className="text-[11px] text-stone-500 mb-0.5">견본주택</div>
                   <div className="text-sm font-black text-stone-900 leading-snug">
                     {CONSULTATION_CONFIG.modelHouseAddress}
                   </div>
-                  <div className="mt-1.5 text-[10px] text-stone-600">
+                  <div className="mt-1.5 text-[11px] text-stone-600">
                     상무시민공원 종합운동장 맞은편
                   </div>
                 </div>

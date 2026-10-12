@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] xl:text-xs uppercase tracking-widest text-gold font-semibold font-serif whitespace-nowrap">
+              <span className="text-[11px] xl:text-xs uppercase tracking-widest text-gold font-semibold font-serif whitespace-nowrap">
                 LOTTE CASTLE SIGNATURE
               </span>
             </div>
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
               <span>{link.label}</span>
               <span className="absolute -bottom-0.5 left-0 h-[2px] w-0 bg-gold-fill rounded-full transition-all duration-300 group-hover:w-full" />
               {link.badge && (
-                <span className="text-[10px] font-semibold text-gold bg-gold-tint-2 border border-gold-line px-1 py-0.5 rounded">
+                <span className="text-[11px] font-semibold text-gold bg-gold-tint-2 border border-gold-line px-1 py-0.5 rounded">
                   {link.badge}
                 </span>
               )}
@@ -120,14 +120,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
         <div className="flex xl:hidden items-center gap-2">
           <a
             href={CONSULTATION_CONFIG.phoneTelLink}
-            className="p-2 sm:hidden text-on-gold bg-gold-fill rounded-lg focus:outline-none"
+            className="p-2.5 sm:hidden text-on-gold bg-gold-fill rounded-lg focus:outline-none"
             aria-label="전화 상담"
           >
             <Phone className="w-4 h-4 fill-on-gold" />
           </a>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-ink-soft hover:text-ink focus:outline-none"
+            className="p-2.5 text-ink-soft hover:text-ink focus:outline-none"
             aria-label="메뉴 열기"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

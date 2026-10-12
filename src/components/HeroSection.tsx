@@ -84,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 key={index}
                 onClick={() => setActiveHeroTab(index)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                className={`px-3.5 py-2.5 sm:py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
                   isActive
                     ? 'bg-amber-400 text-stone-950 shadow-md shadow-amber-400/20 scale-105'
                     : 'bg-stone-900/80 text-stone-300 hover:text-white border border-stone-800 backdrop-blur-sm'
@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   e.stopPropagation();
                   setIsPhotoModalOpen(true);
                 }}
-                className="px-3 py-1.5 rounded-xl bg-stone-950/85 hover:bg-amber-400 hover:text-stone-950 text-amber-300 border border-amber-400/40 text-xs font-bold flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
+                className="px-3.5 py-2.5 rounded-xl bg-stone-950/85 hover:bg-amber-400 hover:text-stone-950 text-amber-300 border border-amber-400/40 text-xs font-bold flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>원본 사진 전체보기</span>

@@ -64,6 +64,14 @@
   }
 }
 
+/* 한글은 단어 중간에서 끊지 않는다.
+   이게 없으면 '중앙공원 롯데캐슬 시그니 / 처' 처럼 어색하게 잘린다.
+   주소나 긴 영문처럼 띄어쓰기가 없는 덩어리는 넘치지 않게 따로 풀어준다. */
+body {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 /* 스크롤 이동이 부드럽게 (앵커 네비게이션) */
 html {
   scroll-behavior: smooth;

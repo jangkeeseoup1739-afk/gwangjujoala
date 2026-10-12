@@ -300,7 +300,7 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
               >
                 <span>{tab.label}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
+                  className={`text-[11px] px-1.5 py-0.5 rounded font-bold ${
                     isActive
                       ? 'bg-surface text-gold'
                       : 'bg-surface-3 text-ink-soft'
@@ -370,7 +370,7 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
                     <Maximize2 className="w-3.5 h-3.5 text-gold" />
                     <span>도면 크게보기</span>
                   </div>
-                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-surface-2 rounded-md text-[10px] font-bold text-gold border border-gold-line">
+                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-surface-2 rounded-md text-[11px] font-bold text-gold border border-gold-line">
                     {item.badge}
                   </div>
                 </div>
@@ -405,14 +405,14 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
               <div className="pt-4 border-t border-line-strong flex items-center justify-between">
                 <button
                   onClick={() => openLightbox(item)}
-                  className="text-xs font-bold text-ink-soft hover:text-ink flex items-center gap-1.5"
+                  className="py-2 text-xs font-bold text-ink-soft hover:text-ink flex items-center gap-1.5"
                 >
                   <Maximize2 className="w-3.5 h-3.5 text-gold" />
                   <span>정밀 확대보기</span>
                 </button>
                 <a
                   href={CONSULTATION_CONFIG.phoneTelLink}
-                  className="text-xs font-bold text-gold hover:text-gold underline"
+                  className="py-2 text-xs font-bold text-gold hover:text-gold underline"
                 >
                   해당 도면 동호수 지정 문의
                 </a>

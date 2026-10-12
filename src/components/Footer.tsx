@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenPassModal }
 
           <button
             onClick={onScrollToTop}
-            className="flex items-center gap-1.5 text-ink-soft hover:text-gold transition-colors"
+            className="py-2 flex items-center gap-1.5 text-ink-soft hover:text-gold transition-colors"
           >
             <span>맨 위로 이동</span>
             <ArrowUp className="w-4 h-4" />

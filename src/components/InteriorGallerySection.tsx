@@ -13,6 +13,7 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
   onOpenPassModal
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [showAll, setShowAll] = useState(false);
   const [activeModalItem, setActiveModalItem] = useState<UnitPhoto | null>(null);
 
   const categories = [
@@ -31,6 +32,10 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
     selectedCategory === 'all'
       ? MODELHOUSE_UNITS_GALLERY
       : MODELHOUSE_UNITS_GALLERY.filter((item) => item.category === selectedCategory);
+
+  // 카드가 길어 모바일 스크롤이 과해진다. 처음에는 일부만 보여준다.
+  const INITIAL = 4;
+  const visibleItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL);
 
   const getSpaceIcon = (category: string) => {
     switch (category) {
@@ -107,7 +112,7 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => { setSelectedCategory(cat.id); setShowAll(false); }}
               className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                 selectedCategory === cat.id
                   ? 'bg-gold-fill text-on-gold shadow-md shadow-gold-fill-2/25 scale-105'
@@ -121,7 +126,7 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
 
         {/* Photo Cards Grid with REAL Photos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredItems.map((item, i) => (
+          {visibleItems.map((item, i) => (
             <div
               key={item.id}
               data-reveal="scale"
@@ -159,7 +164,7 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
                     <span className="text-xs font-semibold text-gold">{item.space}</span>
                   </div>
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                    className={`text-[11px] font-bold px-2 py-0.5 rounded ${
                       item.category === '무상제공'
                         ? 'bg-gold-fill text-on-gold'
                         : 'bg-surface text-ink-soft border border-line'
@@ -195,14 +200,14 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
               <div className="mt-6 pt-4 border-t border-line/80 flex items-center justify-between">
                 <button
                   onClick={() => setActiveModalItem(item)}
-                  className="text-xs text-ink-soft hover:text-ink flex items-center gap-1.5"
+                  className="py-2 text-xs text-ink-soft hover:text-ink flex items-center gap-1.5"
                 >
                   <Eye className="w-3.5 h-3.5 text-gold" />
                   <span>실물 사진 & 스펙</span>
                 </button>
                 <button
                   onClick={onScrollToConsultation}
-                  className="text-xs font-bold text-gold hover:text-gold underline"
+                  className="py-2 text-xs font-bold text-gold hover:text-gold underline"
                 >
                   관람 예약 신청
                 </button>
@@ -210,6 +215,18 @@ export const InteriorGallerySection: React.FC<InteriorGallerySectionProps> = ({
             </div>
           ))}
         </div>
+
+        {!showAll && filteredItems.length > INITIAL && (
+          <div className="-mt-6 mb-12 text-center">
+            <button
+              onClick={() => setShowAll(true)}
+              className="press inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-surface-2 hover:bg-surface-3 text-gold border-2 border-gold-line font-bold text-sm rounded-xl shadow-sm transition-all"
+            >
+              <Maximize2 className="w-4 h-4" />
+              <span>사진 {filteredItems.length}개 모두 보기 (+{filteredItems.length - INITIAL})</span>
+            </button>
+          </div>
+        )}
 
         {/* High Definition Photo Lightbox Modal */}
         {activeModalItem && (

@@ -65,7 +65,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
                   <img
                     src={mapImage}
                     alt={`견본주택 위치 — ${address}`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover/map:scale-105"
+                    className="w-full h-full object-contain bg-white transition-transform duration-500 group-hover/map:scale-105"
                     loading="lazy"
                     decoding="async"
                   />

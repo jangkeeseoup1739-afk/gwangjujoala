@@ -96,7 +96,7 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
                 <img
                   src={mapImage}
                   alt={`견본주택 위치 — ${CONSULTATION_CONFIG.modelHouseAddress}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-white"
                   loading="lazy"
                   decoding="async"
                 />

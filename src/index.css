@@ -68,3 +68,111 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   스크롤 등장 효과
+
+   [data-reveal] 이 붙은 요소는 화면에 들어올 때 떠오르며 나타난다.
+   숨김 상태는 .reveal-ready 가 붙은 뒤에만 적용된다. 자바스크립트가
+   돌지 않으면 아무것도 숨기지 않으므로 내용이 사라지는 일이 없다.
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  --reveal-duration: 0.62s;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform;
+}
+
+.reveal-ready [data-reveal='fade']   { transform: none; }
+.reveal-ready [data-reveal='left']   { transform: translate3d(-26px, 0, 0); }
+.reveal-ready [data-reveal='right']  { transform: translate3d(26px, 0, 0); }
+.reveal-ready [data-reveal='scale']  { transform: scale(0.96); }
+.reveal-ready [data-reveal='zoom']   { transform: scale(1.04); }
+
+.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* 차례로 나타나기 — 카드 목록에 쓴다 */
+.reveal-ready [data-reveal-delay='1'] { transition-delay: 0.06s; }
+.reveal-ready [data-reveal-delay='2'] { transition-delay: 0.12s; }
+.reveal-ready [data-reveal-delay='3'] { transition-delay: 0.18s; }
+.reveal-ready [data-reveal-delay='4'] { transition-delay: 0.24s; }
+.reveal-ready [data-reveal-delay='5'] { transition-delay: 0.30s; }
+.reveal-ready [data-reveal-delay='6'] { transition-delay: 0.36s; }
+.reveal-ready [data-reveal-delay='7'] { transition-delay: 0.42s; }
+.reveal-ready [data-reveal-delay='8'] { transition-delay: 0.48s; }
+
+/* 누를 때 살짝 눌리는 느낌 */
+@layer utilities {
+  .press {
+    transition: transform 0.12s var(--reveal-ease);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+  /* 골드 버튼 위에 지나가는 윤기 */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 -60%;
+    width: 45%;
+    background: linear-gradient(
+      100deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 100%
+    );
+    transform: skewX(-18deg);
+    pointer-events: none;
+  }
+  .sheen:hover::after {
+    animation: sheenSweep 0.85s var(--reveal-ease);
+  }
+}
+
+@keyframes sheenSweep {
+  from { left: -60%; }
+  to   { left: 130%; }
+}
+
+/* 숫자가 올라갈 때 자리수가 흔들리지 않도록 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 애니메이션을 꺼 달라고 설정한 사용자 존중 ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal].is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .sheen::after { display: none; }
+  .press:active { transform: none; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

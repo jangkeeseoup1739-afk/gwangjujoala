@@ -3,6 +3,7 @@ import { CONSULTATION_CONFIG } from '../config/consultation';
 import { APP_IMAGES } from '../assets/images';
 import { CATALYSTS } from '../data/projectData';
 import { Sparkles, TrendingUp, PlaneTakeoff, Cpu, TreePine, Phone, ShieldCheck, ArrowRight, Zap, CheckCircle2 } from 'lucide-react';
+import { CountUp } from './CountUp';
 
 interface MegaCatalystSectionProps {
   onScrollToConsultation: () => void;
@@ -17,14 +18,14 @@ export const MegaCatalystSection: React.FC<MegaCatalystSectionProps> = ({ onScro
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16" data-reveal>
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-tint border border-gold-line text-gold text-xs font-semibold mb-3">
             <Zap className="w-3.5 h-3.5 text-gold" />
             <span>2026 광주 부동산 시장을 뒤흔들 핵심 게임체인저</span>
           </div>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-ink tracking-tight leading-tight">
             전남·광주 <span className="text-gold">군공항 이전</span> &amp; <br className="hidden sm:inline" />
-            국가 <span className="text-gold underline decoration-gold decoration-wavy underline-offset-8">반도체 895조</span> 초대형 호재
+            국가 <span className="text-gold underline decoration-gold decoration-wavy underline-offset-8">반도체 <CountUp to={895} suffix="조" /></span> 초대형 호재
           </h2>
           <p className="mt-4 text-base sm:text-lg text-ink-soft leading-relaxed">
             현재 광주 부동산 시장에서 가장 파급력이 큰 양대 메가 호재! <br className="hidden sm:inline" />
@@ -33,7 +34,7 @@ export const MegaCatalystSection: React.FC<MegaCatalystSectionProps> = ({ onScro
         </div>
 
         {/* High-Tech Mega Vision Graphic Card */}
-        <div className="w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-2xl mb-12 bg-surface-2">
+        <div data-reveal="scale" className="w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-2xl mb-12 bg-surface-2">
           <div className="relative aspect-[16/9] w-full group bg-photo-scrim">
           <img
             src={APP_IMAGES.semiconductorVision}
@@ -161,7 +162,7 @@ export const MegaCatalystSection: React.FC<MegaCatalystSectionProps> = ({ onScro
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
             <a
               href={CONSULTATION_CONFIG.phoneTelLink}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm shadow-lg shadow-gold-fill-2/20 transition-all"
+              className="press w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm shadow-lg shadow-gold-fill-2/20 transition-all"
             >
               <Phone className="w-4 h-4 fill-on-gold" />
               <span>{CONSULTATION_CONFIG.managerName}에게 전화 상담</span>

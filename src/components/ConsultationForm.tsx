@@ -91,7 +91,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
     <section id="consultation" className="py-20 bg-surface text-ink border-t border-gold-line">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-12" data-reveal>
           <div className="text-xs uppercase tracking-widest text-gold font-bold mb-2">
             MODEL HOUSE VISIT PASS
           </div>
@@ -169,7 +169,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 <a
                   href={CONSULTATION_CONFIG.phoneTelLink}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
+                  className="press inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
                 >
                   <Phone className="w-4 h-4 fill-on-gold" />
                   <span>전화로 확정</span>
@@ -209,6 +209,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
           /* ── 발급 신청 ── */
           <form
             onSubmit={handleIssue}
+            data-reveal="scale"
             className="bg-surface rounded-2xl border-2 border-line hover:border-gold-line p-6 sm:p-10 shadow-2xl transition-all space-y-6"
           >
             {errorMessage && (
@@ -302,7 +303,7 @@ export const ConsultationForm: React.FC<ConsultationFormProps> = ({ onPassCreate
 
             <button
               type="submit"
-              className="w-full py-4 px-6 bg-gradient-to-r from-gold-fill via-gold-fill to-gold-fill-2 hover:from-gold-fill-2 hover:to-gold-fill-2 text-on-gold font-extrabold text-base rounded-xl shadow-lg shadow-gold-fill-2/25 flex items-center justify-center gap-2 transition-all"
+              className="press sheen w-full py-4 px-6 bg-gradient-to-r from-gold-fill via-gold-fill to-gold-fill-2 hover:from-gold-fill-2 hover:to-gold-fill-2 text-on-gold font-extrabold text-base rounded-xl shadow-lg shadow-gold-fill-2/25 flex items-center justify-center gap-2 transition-all"
             >
               <Ticket className="w-5 h-5" />
               <span>방문예약증 발급받기</span>

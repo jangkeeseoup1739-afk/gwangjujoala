@@ -85,7 +85,34 @@ modelHouseAddress: "광주시 서구 상무누리로 154",
 
 ---
 
-## 5. 내 컴퓨터에서 실행해 보기
+## 5. 배포하기
+
+**Netlify** 와 **Vercel** 둘 다 됩니다. 저장소를 연결하면 끝입니다.
+
+### Netlify
+
+저장소에 `netlify.toml` 이 들어 있어 **따로 설정할 것이 없습니다.**
+Netlify 에서 **Add new site → Import an existing project** 로 이 저장소를 고르고,
+브랜치를 `claude/kind-mendel-gepifn` 으로 지정한 뒤 Deploy 를 누르면 됩니다.
+
+혹시 수동 입력을 요구하면 이렇게 넣으세요.
+
+| 항목 | 값 |
+|---|---|
+| Build command | `npm run build` |
+| Publish directory | `dist` |
+| Node version | `22` |
+
+### Vercel
+
+**Add New → Project** 로 이 저장소를 고르면 Vite 를 자동 인식합니다.
+(Framework Preset: Vite / Build: `npm run build` / Output: `dist`)
+
+> 배포가 끝나면 `photos` 폴더에 사진을 올릴 때마다 1~2분 뒤 사이트에 자동 반영됩니다.
+
+---
+
+## 6. 내 컴퓨터에서 실행해 보기
 
 Node.js 설치 후:
 
@@ -102,7 +129,7 @@ npm run dev     # http://localhost:3000 에서 열립니다
 
 ---
 
-## 6. 구성
+## 7. 구성
 
 React 19 + Vite + TypeScript + Tailwind CSS v4
 

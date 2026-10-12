@@ -3,6 +3,7 @@ import { CONSULTATION_CONFIG } from '../config/consultation';
 import { FLOOR_PLANS, FloorPlan } from '../data/projectData';
 import { floorPlanPhoto } from '../assets/images';
 import { Maximize2, Phone, X, Layers } from 'lucide-react';
+import { CountUp } from './CountUp';
 
 interface FloorPlansSectionProps {
   onScrollToConsultation: () => void;
@@ -25,7 +26,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
     <section id="floorplans" className="py-20 bg-surface text-ink border-t border-gold-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-12" data-reveal>
           <div className="text-xs uppercase tracking-widest text-gold font-bold mb-2">
             UNIT PLANS &amp; ARCHITECTURAL LAYOUTS
           </div>
@@ -33,20 +34,22 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
             타입별 <span className="text-gold">평면도</span>
           </h2>
           <p className="mt-3 text-ink-soft text-sm sm:text-base">
-            전용 84㎡부터 펜트하우스 233㎡까지 총 {FLOOR_PLANS.length}개 타입입니다.
+            전용 84㎡부터 펜트하우스 233㎡까지 총 <CountUp to={FLOOR_PLANS.length} suffix="개" /> 타입입니다.
             도면을 누르면 크게 보실 수 있습니다.
           </p>
         </div>
 
         {/* 도면 목록 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {FLOOR_PLANS.map((plan) => {
+          {FLOOR_PLANS.map((plan, i) => {
             const photo = floorPlanPhoto(plan.id);
             return (
               <button
                 key={plan.id}
                 onClick={() => setOpenPlan(plan)}
-                className="text-left bg-surface-2 rounded-xl border border-line hover:border-gold-line hover:shadow-lg transition-all overflow-hidden group focus:outline-none focus:ring-2 focus:ring-gold-fill"
+                data-reveal="scale"
+                data-reveal-delay={String((i % 4) + 1)}
+                className="press text-left bg-surface-2 rounded-xl border border-line hover:border-gold-line hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group focus:outline-none focus:ring-2 focus:ring-gold-fill"
               >
                 {/* 도면 */}
                 <div className="relative aspect-[16/9] bg-surface-3 overflow-hidden">
@@ -92,7 +95,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
         </div>
 
         {/* 하단 안내 */}
-        <div className="mt-10 p-5 sm:p-6 rounded-2xl bg-surface-2 border border-gold-line flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div data-reveal className="mt-10 p-5 sm:p-6 rounded-2xl bg-surface-2 border border-gold-line flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-ink-soft text-center sm:text-left">
             <strong className="text-ink">분양가와 잔여 동호수</strong>는 타입·층·향에 따라 달라집니다.
             <br className="hidden sm:block" />
@@ -101,7 +104,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
           <div className="flex flex-col sm:flex-row gap-2.5 shrink-0 w-full sm:w-auto">
             <a
               href={CONSULTATION_CONFIG.phoneTelLink}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
+              className="press inline-flex items-center justify-center gap-2 px-5 py-3 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
             >
               <Phone className="w-4 h-4 fill-on-gold" />
               <span>{CONSULTATION_CONFIG.managerName}에게 전화 상담</span>
@@ -204,7 +207,7 @@ export const FloorPlansSection: React.FC<FloorPlansSectionProps> = ({ onScrollTo
               </span>
               <a
                 href={CONSULTATION_CONFIG.phoneTelLink}
-                className="shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
+                className="press shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-sm rounded-xl shadow-md transition-all"
               >
                 <Phone className="w-4 h-4 fill-on-gold" />
                 <span>{openPlan.name} 타입 분양가 문의</span>

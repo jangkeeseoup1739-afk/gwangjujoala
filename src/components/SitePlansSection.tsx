@@ -265,7 +265,7 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
     <section id="siteplans" className="py-20 bg-surface-3 text-ink border-t border-gold-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-12" data-reveal>
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-tint border border-gold-line text-gold text-xs font-semibold mb-3">
             <Building2 className="w-3.5 h-3.5 text-gold" />
             <span>공식 실물 도면 100% 반영 안내</span>
@@ -331,7 +331,7 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
           <div className="shrink-0 flex flex-col gap-2 w-full md:w-auto">
             <a
               href={CONSULTATION_CONFIG.phoneTelLink}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all"
+              className="press inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all"
             >
               <Phone className="w-4 h-4 fill-on-gold" />
               <span>{CONSULTATION_CONFIG.managerName}에게 {activeBlock} 잔여호실 문의</span>
@@ -346,10 +346,12 @@ export const SitePlansSection: React.FC<SitePlansSectionProps> = ({ onScrollToCo
         <div className={`grid gap-8 mb-14 ${
           currentData.items.length === 1 ? 'grid-cols-1 max-w-3xl mx-auto' : 'grid-cols-1 md:grid-cols-2'
         }`}>
-          {currentData.items.map((item) => (
+          {currentData.items.map((item, i) => (
             <div
               key={item.id}
-              className="rounded-2xl bg-surface border-2 border-line hover:border-gold-line p-6 flex flex-col justify-between transition-all group shadow-xl"
+              data-reveal="scale"
+              data-reveal-delay={String((i % 2) + 1)}
+              className="rounded-2xl bg-surface border-2 border-line hover:border-gold-line p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group shadow-xl"
             >
               <div>
                 {/* Image Box */}

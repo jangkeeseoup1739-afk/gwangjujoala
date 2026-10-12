@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
 import { APP_IMAGES } from '../assets/images';
 import { CUPCAMON_PREMIUM_7, BLOCK_INFO_LIST, INFRASTRUCTURE_HIGHLIGHTS } from '../data/projectData';
+import { CountUp } from './CountUp';
 import {
   Building2,
   Trees,
@@ -54,7 +55,7 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
     <section id="cupcamon-guide" className="py-20 bg-surface text-ink border-t border-gold-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-12" data-reveal>
           <div className="text-xs uppercase tracking-widest text-gold font-bold mb-2">
             LOTTE CASTLE SIGNATURE MASTER GUIDE
           </div>
@@ -103,7 +104,7 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-ink">
                   광주 중앙공원 1지구 <br />
-                  <span className="text-gold">총 2,772세대</span> 매머드 대단지
+                  <span className="text-gold">총 <CountUp to={2772} suffix="세대" /></span> 매머드 대단지
                 </h3>
                 <p className="text-sm text-ink-soft leading-relaxed">
                   광주광역시 서구 화정동, 금호동, 풍암동 일원에 조성되는 광주 최대 민간공원 특례사업으로, 롯데건설(주)의 최상위 하이엔드 주거 브랜드 '시그니처'가 적용됩니다.
@@ -127,7 +128,7 @@ export const CupcamonTabsSection: React.FC<CupcamonTabsSectionProps> = ({
                 <div className="pt-2 flex items-center gap-3">
                   <a
                     href={CONSULTATION_CONFIG.phoneTelLink}
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-xs sm:text-sm transition-all shadow-md"
+                    className="press inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gold-fill hover:bg-gold-fill-2 text-on-gold font-bold text-xs sm:text-sm transition-all shadow-md"
                   >
                     <Phone className="w-4 h-4 fill-on-gold" />
                     <span>{CONSULTATION_CONFIG.managerName}에게 전화 상담</span>

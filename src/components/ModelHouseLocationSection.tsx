@@ -25,7 +25,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
     <section id="location" className="py-20 bg-surface-3 text-ink border-t border-gold-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div data-reveal className="text-center max-w-3xl mx-auto mb-14">
           <div className="text-xs uppercase tracking-widest text-gold font-bold mb-2">
             LOCATION &amp; DIRECTIONS
           </div>
@@ -39,7 +39,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Interactive Simulated Map & Directions (Modeled after the map in user photo) */}
-          <div className="lg:col-span-7 bg-surface-2 rounded-2xl border-2 border-line p-6 sm:p-8 relative">
+          <div data-reveal="left" className="lg:col-span-7 bg-surface-2 rounded-2xl border-2 border-line p-6 sm:p-8 relative">
             <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-gold" />
@@ -145,7 +145,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
                   href={naverMapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold rounded-lg text-xs font-bold transition-all"
+                  className="press flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gold-fill hover:bg-gold-fill-2 text-on-gold rounded-lg text-xs font-bold transition-all"
                 >
                   <Navigation className="w-4 h-4" />
                   <span>지도 길찾기</span>
@@ -155,7 +155,7 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
           </div>
 
           {/* Right: Desk Instructions & Digital Pass Voucher Trigger */}
-          <div className="lg:col-span-5 space-y-6">
+          <div data-reveal="right" data-reveal-delay="2" className="lg:col-span-5 space-y-6">
             {/* VIP Consultation Lounge Real Photo Card */}
             <div className="relative aspect-video w-full rounded-2xl overflow-hidden border-2 border-gold-line shadow-2xl group bg-photo-scrim">
               <img

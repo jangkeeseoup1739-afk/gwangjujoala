@@ -1,0 +1,21 @@
+# Netlify 배포 설정
+# 저장소를 Netlify 에 연결하면 이 파일대로 자동 설정됩니다.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# 단일 페이지라 어떤 주소로 들어와도 첫 화면을 보여준다
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# 해시가 붙은 파일(js/css/이미지)은 오래 캐시해도 안전하다
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

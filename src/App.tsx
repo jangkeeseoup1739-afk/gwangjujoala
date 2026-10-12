@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CONSULTATION_CONFIG } from './config/consultation';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -13,6 +13,7 @@ import { VisitPassModal } from './components/VisitPassModal';
 import { MobileStickyBar } from './components/MobileStickyBar';
 import { FloatingSpeedDial } from './components/FloatingSpeedDial';
 import { Footer } from './components/Footer';
+import { initReveal } from './lib/reveal';
 
 export default function App() {
   const [isPassModalOpen, setIsPassModalOpen] = useState(false);
@@ -27,6 +28,9 @@ export default function App() {
     date: '방문 예약 진행 중',
     unitType: '102 (전용 102.9716㎡)',
   });
+
+  // 스크롤 등장 효과를 켠다
+  useEffect(() => initReveal(), []);
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);

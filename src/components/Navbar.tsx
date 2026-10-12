@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CONSULTATION_CONFIG } from '../config/consultation';
 import { Phone, Calendar, Menu, X, Sparkles } from 'lucide-react';
 
@@ -9,6 +9,15 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSection }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // 스크롤을 내리면 네비를 살짝 조이고 그림자를 준다
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // label: 상단 메뉴(짧게) / long: 모바일 서랍(설명형)
   const navLinks = [
@@ -27,9 +36,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-surface-2/90 backdrop-blur-md border-b border-gold-line text-ink shadow-sm transition-all">
+    <header
+      className={`sticky top-0 z-40 bg-surface-2/90 backdrop-blur-md border-b border-gold-line text-ink transition-all duration-300 ${
+        scrolled ? 'shadow-lg shadow-ink/5' : 'shadow-sm'
+      }`}
+    >
       {/* Top micro banner for urgent announcement */}
-      <div className="bg-gradient-to-r from-gold-tint via-surface-2 to-gold-tint px-4 py-1.5 text-[11px] sm:text-xs text-gold border-b border-gold-line text-center font-medium flex items-center justify-center gap-2">
+      <div className={`bg-gradient-to-r from-gold-tint via-surface-2 to-gold-tint px-4 text-[11px] sm:text-xs text-gold border-b border-gold-line text-center font-medium flex items-center justify-center gap-2 overflow-hidden transition-all duration-300 ${
+          scrolled ? 'max-h-0 py-0 opacity-0 border-b-0' : 'max-h-12 py-1.5 opacity-100'
+        }`}>
         <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse shrink-0 hidden sm:block" />
         <span className="truncate sm:whitespace-normal">[특급호재] 광주 군공항 이전 확정 &amp; 국가 반도체 895조 메가 클러스터 직접 수혜 단지</span>
         <span className="hidden md:inline text-gold/60">|</span>
@@ -67,9 +82,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPassModal, onScrollToSecti
             <button
               key={link.id}
               onClick={() => handleNavClick(link.id)}
-              className="text-[13px] font-medium text-ink-soft hover:text-gold transition-colors py-1 focus:outline-none flex items-center gap-1 whitespace-nowrap"
+              className="group relative text-[13px] font-medium text-ink-soft hover:text-gold transition-colors py-1 focus:outline-none flex items-center gap-1 whitespace-nowrap"
             >
               <span>{link.label}</span>
+              <span className="absolute -bottom-0.5 left-0 h-[2px] w-0 bg-gold-fill rounded-full transition-all duration-300 group-hover:w-full" />
               {link.badge && (
                 <span className="text-[10px] font-semibold text-gold bg-gold-tint-2 border border-gold-line px-1 py-0.5 rounded">
                   {link.badge}

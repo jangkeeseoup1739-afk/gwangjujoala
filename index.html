@@ -24,11 +24,41 @@
     <meta name="theme-color" content="#faf8f5" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <!--
+      글꼴(Pretendard)은 화면 그리기를 막지 않도록 비동기로 불러옵니다.
+      카카오톡·문자 등 앱 내부 브라우저에서 CDN 응답이 늦으면 예전에는
+      흰 화면만 보였습니다. 이제는 기본 한글 글꼴로 먼저 보이고, 글꼴이
+      도착하면 자연스럽게 바뀝니다. dynamic-subset 은 필요한 글자만
+      내려받아 용량이 훨씬 작습니다.
+    -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+      />
+    </noscript>
   </head>
   <body class="bg-surface text-ink font-sans antialiased selection:bg-gold-fill selection:text-on-gold">
     <div id="root"></div>
+    <!-- 자바스크립트가 막힌 환경에서도 연락처는 보이게 한다 -->
+    <noscript>
+      <div style="max-width:40rem;margin:4rem auto;padding:0 1.25rem;text-align:center;line-height:1.7">
+        <h1 style="font-size:1.5rem;margin:0 0 .75rem">중앙공원 롯데캐슬 시그니처</h1>
+        <p style="margin:0 0 .25rem">광주 서구 중앙공원 1지구 · 총 2,772세대</p>
+        <p style="margin:0 0 1.5rem">모델하우스 : 광주광역시 서구 상무누리로 154</p>
+        <p style="margin:0">분양 상담 · 방문예약</p>
+        <p style="font-size:1.25rem;margin:.25rem 0 0">
+          <a href="tel:010-5767-6645" style="color:#a16207;font-weight:700">조아라 팀장 010-5767-6645</a>
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

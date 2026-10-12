@@ -7,6 +7,11 @@
    컴포넌트에서는 bg-surface / text-ink / text-gold 처럼 이름으로만 씁니다.
    ────────────────────────────────────────────────────────────────────────── */
 @theme {
+  /* 글꼴 ─ 한글 본문용. Pretendard 가 늦게·안 와도 아래 기본 글꼴로 바로 읽힙니다 */
+  --font-sans: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Noto Sans KR",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
   /* 면 (surface) ─ 배경 */
   --color-surface: #faf8f5;        /* 페이지 바탕 — 웜 아이보리 */
   --color-surface-2: #ffffff;      /* 카드 · 패널 */

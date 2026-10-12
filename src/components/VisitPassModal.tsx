@@ -18,7 +18,8 @@ export const VisitPassModal: React.FC<VisitPassModalProps> = ({
   guestDate,
   guestUnit = '102㎡ (구 39평형)',
 }) => {
-  const mapImage = photoSlot('map');
+  // 예약증은 견본주택을 찾아가는 용도이므로 견본주택 약도를 우선 쓴다
+  const mapImage = photoSlot('map-modelhouse') ?? photoSlot('map');
 
   if (!isOpen) return null;
 

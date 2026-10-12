@@ -92,6 +92,13 @@ export const ModelHouseLocationSection: React.FC<ModelHouseLocationSectionProps>
               )}
             </div>
 
+            {mapImage && (
+              <p className="mt-2 text-[11px] text-ink-muted">
+                ※ 지도는 <strong className="text-ink-soft">단지 위치(2-1BL)</strong>입니다.
+                견본주택은 아래 주소를 확인해 주세요.
+              </p>
+            )}
+
             {/* 지도 앱으로 바로 열기 */}
             <div className="mt-3 grid grid-cols-2 gap-2.5">
               <a
